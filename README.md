@@ -18,4 +18,11 @@ If there is no database, then it is going to create a new database and it is goi
 But if there is already a database that corresponds to that connection string that we created, then it is going to see what are the pending migrations.
 Because if there are pending migrations, then we only want to apply those migrations in that database.
 And the migrations that have already been applied in the database will not be applied a second time.
+
+Agenda
+-Create entities
+-Configure fields
+-Relationships
+-3 kinds of  configuratoins
+
 ```

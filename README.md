@@ -92,4 +92,10 @@ public DateTime? DateOfBirth { get; set; }
 
 modelBuilder.Entity<Actor>().Property(p => p.DateOfBirth).HasColumnType("date");
 
+Configuring Decimal:
+[Precision(precision:9, scale: 2)]
+
+modelBuilder.Entity<Cinema>().Property(p => p.Price)
+    .HasPrecision(precision: 9, scale: 2);
+
 ```

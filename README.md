@@ -103,4 +103,38 @@ public DbSet<Movie> Movies { get; set; }
 you will be able to query tables of your database through the way db-context, and you need these properties and in order to directly 
 query those tables. If I don't have this here, then it will be impossible for me to make a direct and simple query to the movies table.
 
+One-to-One Relationships
+• We can model relationships between our entities
+• Types:
+    • One-to-one
+    • One-to-many
+    • Many-to-many
+    • One-to-One: One record relates to, at most, a single record
+
+Navigation property:  is a mechanism that allows entity framework or to indicate that there is a relationship between two entities.
+
+public class CinemaOffer
+{
+    public int Id { get; set; }
+    public DateTime Begin { get; set; }
+    public DateTime End { get; set; }
+    public decimal DiscountPercentage { get; set; }
+    There is a convention that says that since there is a relationship between cinema and cinema offer
+    through this property(CinemaOffer), then this CinemaId is going to be configure as a foreign key.
+    public int CinemaId { get; set; }
+}
+
+public class Cinema
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+    public Point Location { get; set; }.
+    // Navigation property
+    // it means that there is a relationship between Cinema and CinemaOffer.
+    public CinemaOffer CinemaOffer { get; set; }
+}
+
+
+
 ```

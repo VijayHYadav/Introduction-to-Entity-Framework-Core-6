@@ -29,11 +29,20 @@ namespace EFCoreMovies
                 .HasMaxLength(250).IsRequired();
             modelBuilder.Entity<Movie>().Property(p => p.ReleaseDate).HasColumnType("date");
             modelBuilder.Entity<Movie>().Property(p => p.PosterURL).HasMaxLength(500).IsUnicode(false);
+
+            modelBuilder.Entity<CinemaOffer>().Property(p => p.DiscountPercentage)
+                .HasColumnType("decimal").HasPrecision(5, 2);
+            modelBuilder.Entity<CinemaOffer>().Property(p => p.Begin)
+                .HasColumnType("date");
+            modelBuilder.Entity<CinemaOffer>().Property(p => p.End)
+                .HasColumnType("date");
+
         }
 
         public DbSet<Genre> Generes { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<CinemaOffer> CinemaOffers { get; set; }
     }
 }

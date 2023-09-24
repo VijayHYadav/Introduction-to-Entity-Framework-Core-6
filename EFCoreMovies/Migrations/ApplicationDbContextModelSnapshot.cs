@@ -63,6 +63,33 @@ namespace EFCoreMovies.Migrations
                     b.ToTable("Cinemas");
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.CinemaOffer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Begin")
+                        .HasColumnType("date");
+
+                    b.Property<int>("CinemaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("DiscountPercentage")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CinemaId")
+                        .IsUnique();
+
+                    b.ToTable("CinemaOffers");
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -104,6 +131,20 @@ namespace EFCoreMovies.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("EFCoreMovies.Entities.CinemaOffer", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Cinema", null)
+                        .WithOne("CinemaOffer")
+                        .HasForeignKey("EFCoreMovies.Entities.CinemaOffer", "CinemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EFCoreMovies.Entities.Cinema", b =>
+                {
+                    b.Navigation("CinemaOffer");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 
 namespace EFCoreMovies.Entities
 {
@@ -7,5 +8,6 @@ namespace EFCoreMovies.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
+        public Point Location { get; set; }
     }
 }

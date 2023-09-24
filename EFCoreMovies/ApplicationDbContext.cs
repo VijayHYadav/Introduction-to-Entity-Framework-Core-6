@@ -22,7 +22,8 @@ namespace EFCoreMovies
 
             modelBuilder.Entity<Cinema>().Property(p => p.Name)
                 .HasMaxLength(150).IsRequired();
-            modelBuilder.Entity<Cinema>().Property(p => p.Price).HasColumnType("decimal")
+            
+            modelBuilder.Entity<CinemaHall>().Property(p => p.Cost).HasColumnType("decimal")
                 .HasPrecision(precision: 9, scale: 2);
             
             modelBuilder.Entity<Movie>().Property(p => p.Title)
@@ -44,5 +45,6 @@ namespace EFCoreMovies
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<CinemaOffer> CinemaOffers { get; set; }
+        public DbSet<CinemaHall> CinemaHalls { get; set; }
     }
 }

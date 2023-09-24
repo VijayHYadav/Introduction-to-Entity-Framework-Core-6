@@ -54,13 +54,29 @@ namespace EFCoreMovies.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
+                    b.HasKey("Id");
+
+                    b.ToTable("Cinemas");
+                });
+
+            modelBuilder.Entity("EFCoreMovies.Entities.CinemaHall", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CinemaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Cost")
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cinemas");
+                    b.HasIndex("CinemaId");
+
+                    b.ToTable("CinemaHalls");
                 });
 
             modelBuilder.Entity("EFCoreMovies.Entities.CinemaOffer", b =>
@@ -133,6 +149,17 @@ namespace EFCoreMovies.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.CinemaHall", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Cinema", "Cinema")
+                        .WithMany("CinemaHalls")
+                        .HasForeignKey("CinemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cinema");
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.CinemaOffer", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.Cinema", null)
@@ -144,6 +171,8 @@ namespace EFCoreMovies.Migrations
 
             modelBuilder.Entity("EFCoreMovies.Entities.Cinema", b =>
                 {
+                    b.Navigation("CinemaHalls");
+
                     b.Navigation("CinemaOffer");
                 });
 #pragma warning restore 612, 618

@@ -7,5 +7,7 @@
         public bool InCinemas { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string PosterURL { get; set; }
+        public HashSet<Genre> Genres { get; set; }
+        public HashSet<CinemaHall> cinemaHalls { get; set; }
     }
 }

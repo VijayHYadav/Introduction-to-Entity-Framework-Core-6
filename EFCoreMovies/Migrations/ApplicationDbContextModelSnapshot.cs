@@ -18,6 +18,21 @@ namespace EFCoreMovies.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
 
+            modelBuilder.Entity("CinemaHallMovie", b =>
+                {
+                    b.Property<int>("MoviesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("cinemaHallsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MoviesId", "cinemaHallsId");
+
+                    b.HasIndex("cinemaHallsId");
+
+                    b.ToTable("CinemaHallMovie");
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.Actor", b =>
                 {
                     b.Property<int>("Id")
@@ -64,6 +79,11 @@ namespace EFCoreMovies.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<int>("CinemaHallType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(1);
 
                     b.Property<int>("CinemaId")
                         .HasColumnType("INTEGER");
@@ -149,6 +169,36 @@ namespace EFCoreMovies.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.Property<int>("GenresId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MoviesId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("GenresId", "MoviesId");
+
+                    b.HasIndex("MoviesId");
+
+                    b.ToTable("GenreMovie");
+                });
+
+            modelBuilder.Entity("CinemaHallMovie", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EFCoreMovies.Entities.CinemaHall", null)
+                        .WithMany()
+                        .HasForeignKey("cinemaHallsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.CinemaHall", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.Cinema", "Cinema")
@@ -165,6 +215,21 @@ namespace EFCoreMovies.Migrations
                     b.HasOne("EFCoreMovies.Entities.Cinema", null)
                         .WithOne("CinemaOffer")
                         .HasForeignKey("EFCoreMovies.Entities.CinemaOffer", "CinemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GenreMovie", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EFCoreMovies.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

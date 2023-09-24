@@ -12,3 +12,6 @@ namespace EFCoreMovies.Entities
         public HashSet<CinemaHall> CinemaHalls { get; set; }
     }
 }
+
+// One Cinema has one CinemaOffer
+// One Cinema Has Many CinemHall

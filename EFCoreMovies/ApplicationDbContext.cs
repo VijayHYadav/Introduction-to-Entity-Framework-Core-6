@@ -9,6 +9,13 @@ namespace EFCoreMovies
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Genre>().Property(p => p.Name).HasMaxLength(150).IsRequired();
+        }
+
         public DbSet<Genre> Generes { get; set; }
     }
 }

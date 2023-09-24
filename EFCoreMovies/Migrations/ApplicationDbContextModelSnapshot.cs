@@ -25,12 +25,11 @@ namespace EFCoreMovies.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("GenreName");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GenresTbl", "movies");
+                    b.ToTable("Generes", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -19,6 +19,11 @@ But if there is already a database that corresponds to that connection string th
 Because if there are pending migrations, then we only want to apply those migrations in that database.
 And the migrations that have already been applied in the database will not be applied a second time.
 
+>> dotnet ef migrations remove
+>> Remove-Migration
+It remove the latest migration we can pass some configuration to  it, but for now we're going to keep it simple.
+
+
 ===========================================================================
 
 Agenda
@@ -28,5 +33,29 @@ Agenda
 -3 kinds of  configuratoins
 
 configuration by convention: 
+    If a field is called I.D., then automatically it will reconfigure as a primary key.
+    A convention means that something will be configure as long as you follow the convention.
+    This is called configuration by convention and it allows us to do configurations in entity framework core without having to write code.
+    Other convention for having a field mark as a primary key is to say here instead of I.D if I say GenreID, which is the name of the  entity plus ID
+    then it is  the same.
+
+// Configuring the Primary Key in 3 Ways
+
+by convention model
+public int ID { get; set; } 
+by convention model
+public int GenreID { get; set; } 
+
+data anotation model
+[Key]
+public int Identifier { get; set; }
+
+fluent API model
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
+
+    modelBuilder.Entity<Genre>().HasKey(p => p.Identifier);
+}
 
 ```

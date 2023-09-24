@@ -1,4 +1,6 @@
-﻿namespace EFCoreMovies.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EFCoreMovies.Entities
 {
     public class Genre
     {

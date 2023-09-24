@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreMovies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230924023114_Initial")]
+    [Migration("20230924025705_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

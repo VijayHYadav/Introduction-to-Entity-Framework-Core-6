@@ -58,4 +58,26 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
     modelBuilder.Entity<Genre>().HasKey(p => p.Identifier);
 }
 
+Q How can we change the name of our table and schema?
+We can do it in two ways.
+The first one is using data annotations, and the second one is by using the fluent API.
+
+Data annotations:
+namespace EFCoreMovies.Entities
+{
+    [Table(name: "GenresTbl", Schema = "movies")]
+    public class Genre
+    {
+        public int Id { get; set; }
+        [Column("GenreName")]
+        public string Name { get; set; }
+    }
+}
+
+fluent API.
+modelBuilder.Entity<Genre>().ToTable(name: "GenresTbl", schema: "movies");
+modelBuilder.Entity<Genre>().Property(p => p.Name)
+    .HasColumnName("GenreName")
+    .HasMaxLength(150).IsRequired();
+
 ```

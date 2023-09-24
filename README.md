@@ -80,4 +80,16 @@ modelBuilder.Entity<Genre>().Property(p => p.Name)
     .HasColumnName("GenreName")
     .HasMaxLength(150).IsRequired();
 
+
+datetime2: because that is the default convention that says that daytime will map to daytime2.
+Now, we don't want that because we're not really going to save the time when the actor was born.
+I just want to restore the date, not the time.
+daytime it is a struct, which means that it is a value type, not a reference type.
+I C sharp value types can't be null 
+
+[Column(TypeName="Date")]
+public DateTime? DateOfBirth { get; set; }
+
+modelBuilder.Entity<Actor>().Property(p => p.DateOfBirth).HasColumnType("date");
+
 ```

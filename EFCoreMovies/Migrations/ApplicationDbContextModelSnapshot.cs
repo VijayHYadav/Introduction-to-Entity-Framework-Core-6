@@ -78,6 +78,33 @@ namespace EFCoreMovies.Migrations
 
                     b.ToTable("Generes");
                 });
+
+            modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("InCinemas")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PosterURL")
+                        .HasMaxLength(500)
+                        .IsUnicode(false)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Movies");
+                });
 #pragma warning restore 612, 618
         }
     }

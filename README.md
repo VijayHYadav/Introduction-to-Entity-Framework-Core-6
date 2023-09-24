@@ -23,7 +23,8 @@ And the migrations that have already been applied in the database will not be ap
 >> Remove-Migration
 It remove the latest migration we can pass some configuration to  it, but for now we're going to keep it simple.
 
-
+>> dotnet ef migrations remove --force (runs  the down function)
+>> Remove-Migration --Force (runs  the down function)
 ===========================================================================
 
 Agenda
@@ -97,5 +98,9 @@ Configuring Decimal:
 
 modelBuilder.Entity<Cinema>().Property(p => p.Price)
     .HasPrecision(precision: 9, scale: 2);
+
+public DbSet<Movie> Movies { get; set; }
+you will be able to query tables of your database through the way db-context, and you need these properties and in order to directly 
+query those tables. If I don't have this here, then it will be impossible for me to make a direct and simple query to the movies table.
 
 ```

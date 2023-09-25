@@ -169,6 +169,28 @@ namespace EFCoreMovies.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ActorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Character")
+                        .HasMaxLength(150)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MovieId", "ActorId");
+
+                    b.HasIndex("ActorId");
+
+                    b.ToTable("MoviesActors");
+                });
+
             modelBuilder.Entity("GenreMovie", b =>
                 {
                     b.Property<int>("GenresId")
@@ -219,6 +241,25 @@ namespace EFCoreMovies.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Actor", "Actor")
+                        .WithMany("MoviesActors")
+                        .HasForeignKey("ActorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EFCoreMovies.Entities.Movie", "Movie")
+                        .WithMany("MoviesActors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("GenreMovie", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.Genre", null)
@@ -234,11 +275,21 @@ namespace EFCoreMovies.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.Actor", b =>
+                {
+                    b.Navigation("MoviesActors");
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.Cinema", b =>
                 {
                     b.Navigation("CinemaHalls");
 
                     b.Navigation("CinemaOffer");
+                });
+
+            modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
+                {
+                    b.Navigation("MoviesActors");
                 });
 #pragma warning restore 612, 618
         }

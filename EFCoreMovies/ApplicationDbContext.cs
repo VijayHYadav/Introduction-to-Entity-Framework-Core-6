@@ -9,37 +9,34 @@ namespace EFCoreMovies
         {
         }
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>().HaveColumnType("date");
+            configurationBuilder.Properties<string>().HaveMaxLength(150);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Genre>().Property(p => p.Name)
-                .HasMaxLength(150).IsRequired();
+            modelBuilder.Entity<Genre>().Property(p => p.Name).IsRequired();
 
-            modelBuilder.Entity<Actor>().Property(p => p.Name)
-                .HasMaxLength(150).IsRequired();
-            modelBuilder.Entity<Actor>().Property(p => p.DateOfBirth).HasColumnType("date");
+            modelBuilder.Entity<Actor>().Property(p => p.Name).IsRequired();
+            //modelBuilder.Entity<Actor>().Property(p => p.Biography).HasColumnType("nvarchar(max)");
 
-            modelBuilder.Entity<Cinema>().Property(p => p.Name)
-                .HasMaxLength(150).IsRequired();
+            modelBuilder.Entity<Cinema>().Property(p => p.Name).IsRequired();
             
             modelBuilder.Entity<CinemaHall>().Property(p => p.Cost).HasColumnType("decimal").HasPrecision(precision: 9, scale: 2);
             modelBuilder.Entity<CinemaHall>().Property(p => p.CinemaHallType).HasDefaultValue(CinemaHallType.TwoDimensions);
             
             modelBuilder.Entity<Movie>().Property(p => p.Title)
                 .HasMaxLength(250).IsRequired();
-            modelBuilder.Entity<Movie>().Property(p => p.ReleaseDate).HasColumnType("date");
             modelBuilder.Entity<Movie>().Property(p => p.PosterURL).HasMaxLength(500).IsUnicode(false);
 
             modelBuilder.Entity<CinemaOffer>().Property(p => p.DiscountPercentage)
                 .HasColumnType("decimal").HasPrecision(5, 2);
-            modelBuilder.Entity<CinemaOffer>().Property(p => p.Begin)
-                .HasColumnType("date");
-            modelBuilder.Entity<CinemaOffer>().Property(p => p.End)
-                .HasColumnType("date");
 
             modelBuilder.Entity<MovieActor>().HasKey(p => new { p.MovieId, p.ActorId });
-            modelBuilder.Entity<MovieActor>().Property(p => p.Character).HasMaxLength(150);
         }
 
         public DbSet<Genre> Generes { get; set; }

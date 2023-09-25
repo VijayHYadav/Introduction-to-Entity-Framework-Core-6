@@ -40,6 +40,7 @@ namespace EFCoreMovies.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Biography")
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DateOfBirth")

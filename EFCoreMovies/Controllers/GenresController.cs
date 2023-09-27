@@ -1,5 +1,6 @@
 ﻿using Azure;
 using EFCoreMovies.Entities;
+using EFCoreMovies.Utilites;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -18,7 +19,7 @@ namespace EFCoreMovies.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Genre>> Get() {
+        public async Task<IEnumerable<Genre>> Get(int page=1, int recordsToTake = 2) {
             // here we are doing a synchronous operation
             // But since consulting a database is an io
             // operation, the good practices says that we should use asynchronous programming
@@ -29,7 +30,7 @@ namespace EFCoreMovies.Controllers
             //This will allow us, for example, to update those records or delete them in a really easy manner.
             //So if we only want to do a read only operation, then we can skip the tracking and make our application
             //more performant. For that, we use a method called AsNoTracking.
-            return await context.Generes.AsNoTracking().ToListAsync();
+            return await context.Generes.AsNoTracking().Paginate(page, recordsToTake).ToListAsync();
         }
 
         [HttpGet("first")]

@@ -1,4 +1,5 @@
 ﻿using Azure;
+using EFCoreMovies.DTOs;
 using EFCoreMovies.Entities;
 using EFCoreMovies.Utilites;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,21 @@ namespace EFCoreMovies.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Actor>> Get(int page=1, int recordsToTake = 2) {
+        public async Task<IEnumerable<ActorDTO>> Get(int page=1, int recordsToTake = 2) {
             
-            return await context.Actors.AsNoTracking().Paginate(page, recordsToTake).ToListAsync();
+            return await context.Actors.AsNoTracking()
+                // Select is  call projections
+                .Select(a => new ActorDTO { Id = a.Id, Name = a.Name, DateOfBirth = a.DateOfBirth })
+                .Paginate(page, recordsToTake)
+                .ToListAsync();
         }
 
+        [HttpGet("ids")]
+        public async Task<IEnumerable<int>> GetIds()
+        {
 
-        
+            return await context.Actors.Select(a => a.Id).ToListAsync();
+        }
+
     }
 }

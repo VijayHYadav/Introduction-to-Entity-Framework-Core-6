@@ -6,3 +6,4 @@ Agenda
 - Automapper
 ```
 ![Alt text](resources/image.png)
+![Alt text](resources/globleNoTracking.png)

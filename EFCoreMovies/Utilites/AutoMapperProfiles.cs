@@ -13,6 +13,10 @@ namespace EFCoreMovies.Utilites
         public AutoMapperProfiles()
         {
             CreateMap<Actor, ActorDTO>();
+            // .NET number values such as positive and negative infinity cannot be written as valid JSON. 
+            CreateMap<Cinema, CinemaDTO>()
+                .ForMember(dto => dto.Latitude, ent => ent.MapFrom(p => p.Location.Y))
+                .ForMember(dto => dto.Longitude, ent => ent.MapFrom(p => p.Location.X));
         }
     }
 }

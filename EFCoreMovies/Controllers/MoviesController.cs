@@ -21,8 +21,8 @@ namespace EFCoreMovies.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<MovieDTO>> Get(int id) {
             var movie = await context.Movies
-                .Include(m => m.Genres)
-                .Include(m => m.cinemaHalls)
+                .Include(m => m.Genres.OrderByDescending(g => g.Name).Where(g => !g.Name.Contains("m")))
+                .Include(m => m.cinemaHalls.OrderByDescending(ch => ch.Cinema.Name))
                     .ThenInclude(ch => ch.Cinema)
                 .Include(m => m.MoviesActors)
                     .ThenInclude(ma => ma.Actor)

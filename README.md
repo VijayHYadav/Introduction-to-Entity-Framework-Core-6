@@ -1,4 +1,10 @@
 ```
+dotnet run
+
+dotnet watch
+
+dotnet watch --no-hot-reload
+
 Agenda
 - Queries
 - Filters

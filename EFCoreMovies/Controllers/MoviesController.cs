@@ -55,5 +55,62 @@ namespace EFCoreMovies.Controllers
 
             return movieDTO;
         }
+
+        [HttpGet("selectloading/{id:int}")]
+        public async Task<ActionResult> GetSelectLoading(int id) {
+
+            var movieDTO = await context.Movies.Select(m => new
+            {
+                Id = m.Id,
+                Title = m.Title,
+                Genres =  m.Genres.Select(g => g.Name).OrderByDescending(n => n).ToList()
+            }).FirstOrDefaultAsync(m => m.Id == id);
+
+            /*
+            {
+                "id": 3,
+                "title": "Spider-Man: No way home",
+                "genres": [
+                    "Science Fiction",
+                    "Comedy",
+                    "Action"
+                ]
+            }
+            */
+
+            //* var movieDTO = await context.Movies.Select(m => new MovieDTO
+            //* {
+            //*     Id = m.Id,
+            //*     Title = m.Title,
+            //*     Genres =  mapper.Map<List<GenreDTO>>(m.Genres.OrderByDescending(g => g.Name))
+            //* }).FirstOrDefaultAsync(m => m.Id == id);
+
+            /*
+            {
+                "id": 3,
+                "title": "Spider-Man: No way home",
+                "genres": [
+                    {
+                    "id": 4,
+                    "name": "Science Fiction"
+                    },
+                    {
+                    "id": 3,
+                    "name": "Comedy"
+                    },
+                    {
+                    "id": 1,
+                    "name": "Action"
+                    }
+                ],
+                "cinemas": null,
+                "actors": null
+            }
+            */
+
+            if (movieDTO is null) return NotFound();
+
+            return Ok(movieDTO);
+        }
     }
 }

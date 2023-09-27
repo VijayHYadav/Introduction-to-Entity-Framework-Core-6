@@ -5,20 +5,19 @@
 namespace EFCoreMovies.Migrations
 {
     /// <inheritdoc />
-    public partial class GenreNameRequired : Migration
+    public partial class ActorBiographySize : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Generes",
-                type: "TEXT",
+                name: "Biography",
+                table: "Actors",
+                type: "nvarchar(max)",
                 maxLength: 150,
-                nullable: false,
-                defaultValue: "",
+                nullable: true,
                 oldClrType: typeof(string),
-                oldType: "TEXT",
+                oldType: "nvarchar(150)",
                 oldMaxLength: 150,
                 oldNullable: true);
         }
@@ -27,14 +26,15 @@ namespace EFCoreMovies.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Generes",
-                type: "TEXT",
+                name: "Biography",
+                table: "Actors",
+                type: "nvarchar(150)",
                 maxLength: 150,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "TEXT",
-                oldMaxLength: 150);
+                oldType: "nvarchar(max)",
+                oldMaxLength: 150,
+                oldNullable: true);
         }
     }
 }

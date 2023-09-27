@@ -3,6 +3,7 @@ using System;
 using EFCoreMovies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
@@ -12,22 +13,26 @@ using NetTopologySuite.Geometries;
 namespace EFCoreMovies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230924161111_ManyToManySkip")]
-    partial class ManyToManySkip
+    [Migration("20230926162942_Sqlite2SqlServer")]
+    partial class Sqlite2SqlServer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CinemaHallMovie", b =>
                 {
                     b.Property<int>("MoviesId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("cinemaHallsId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("MoviesId", "cinemaHallsId");
 
@@ -40,10 +45,13 @@ namespace EFCoreMovies.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Biography")
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("date");
@@ -51,7 +59,7 @@ namespace EFCoreMovies.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -62,15 +70,17 @@ namespace EFCoreMovies.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<Point>("Location")
-                        .HasColumnType("POINT");
+                        .HasColumnType("geography");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -81,15 +91,17 @@ namespace EFCoreMovies.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CinemaHallType")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("int")
                         .HasDefaultValue(1);
 
                     b.Property<int>("CinemaId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Cost")
                         .HasPrecision(9, 2)
@@ -106,13 +118,15 @@ namespace EFCoreMovies.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Begin")
                         .HasColumnType("date");
 
                     b.Property<int>("CinemaId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("DiscountPercentage")
                         .HasPrecision(5, 2)
@@ -133,12 +147,14 @@ namespace EFCoreMovies.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -149,15 +165,17 @@ namespace EFCoreMovies.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("InCinemas")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("PosterURL")
                         .HasMaxLength(500)
                         .IsUnicode(false)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(500)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("date");
@@ -165,20 +183,42 @@ namespace EFCoreMovies.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Character")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "ActorId");
+
+                    b.HasIndex("ActorId");
+
+                    b.ToTable("MoviesActors");
+                });
+
             modelBuilder.Entity("GenreMovie", b =>
                 {
                     b.Property<int>("GenresId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("MoviesId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("GenresId", "MoviesId");
 
@@ -222,6 +262,25 @@ namespace EFCoreMovies.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.MovieActor", b =>
+                {
+                    b.HasOne("EFCoreMovies.Entities.Actor", "Actor")
+                        .WithMany("MoviesActors")
+                        .HasForeignKey("ActorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EFCoreMovies.Entities.Movie", "Movie")
+                        .WithMany("MoviesActors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("GenreMovie", b =>
                 {
                     b.HasOne("EFCoreMovies.Entities.Genre", null)
@@ -237,11 +296,21 @@ namespace EFCoreMovies.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("EFCoreMovies.Entities.Actor", b =>
+                {
+                    b.Navigation("MoviesActors");
+                });
+
             modelBuilder.Entity("EFCoreMovies.Entities.Cinema", b =>
                 {
                     b.Navigation("CinemaHalls");
 
                     b.Navigation("CinemaOffer");
+                });
+
+            modelBuilder.Entity("EFCoreMovies.Entities.Movie", b =>
+                {
+                    b.Navigation("MoviesActors");
                 });
 #pragma warning restore 612, 618
         }

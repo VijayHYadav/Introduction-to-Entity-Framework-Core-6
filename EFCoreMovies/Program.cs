@@ -10,8 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("name=DefaultConnection",
-    sqlite => sqlite.UseNetTopologySuite()));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("name=DefaultConnection",
+    sqlServer => sqlServer.UseNetTopologySuite()));
 
 var app = builder.Build();
 

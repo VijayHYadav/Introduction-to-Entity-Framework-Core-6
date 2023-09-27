@@ -31,5 +31,19 @@ namespace EFCoreMovies.Controllers
             //more performant. For that, we use a method called AsNoTracking.
             return await context.Generes.AsNoTracking().ToListAsync();
         }
+
+        [HttpGet("first")]
+        public async Task<ActionResult<Genre>> GetFirst()
+        {
+            
+            var genre = await context.Generes.FirstOrDefaultAsync(g => g.Name.Contains("m"));
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            return genre;
+        }
     }
 }

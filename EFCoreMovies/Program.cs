@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     options.UseSqlServer("name=DefaultConnection", sqlServer => sqlServer.UseNetTopologySuite());

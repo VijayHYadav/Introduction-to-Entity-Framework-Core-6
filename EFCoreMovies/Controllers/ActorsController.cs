@@ -1,4 +1,6 @@
-﻿using Azure;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Azure;
 using EFCoreMovies.DTOs;
 using EFCoreMovies.Entities;
 using EFCoreMovies.Utilites;
@@ -13,9 +15,11 @@ namespace EFCoreMovies.Controllers
     public class ActorsController : ControllerBase
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper; 
 
-        public ActorsController(ApplicationDbContext context)
+        public ActorsController(ApplicationDbContext context, IMapper mapper)
         {
+            this.mapper = mapper;
             this.context = context;
         }
 
@@ -24,7 +28,7 @@ namespace EFCoreMovies.Controllers
             
             return await context.Actors.AsNoTracking()
                 // Select is  call projections
-                .Select(a => new ActorDTO { Id = a.Id, Name = a.Name, DateOfBirth = a.DateOfBirth })
+                .ProjectTo<ActorDTO>(mapper.ConfigurationProvider)
                 .Paginate(page, recordsToTake)
                 .ToListAsync();
         }

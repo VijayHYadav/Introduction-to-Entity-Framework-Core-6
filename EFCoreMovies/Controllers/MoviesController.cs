@@ -184,5 +184,40 @@ namespace EFCoreMovies.Controllers
 
             return Ok(groupedMovies);
         }
+
+        // * We will be able to filter movies by their title if they are in cinema and also by their genres.
+        // * But the filters that we're going to apply are going to be dynamic in the sense that they will only be
+        // * applied if the user want to see that.
+
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<MovieDTO>>> Filter([FromQuery] MovieFilterDTO movieFilterDTO)
+        {
+            var moviesQueryable = context.Movies.AsQueryable();
+
+            if (!string.IsNullOrEmpty(movieFilterDTO.Title))
+            {
+                moviesQueryable = moviesQueryable.Where(m => m.Title.Contains(movieFilterDTO.Title));
+            }
+
+            if (movieFilterDTO.InCinemas)
+            {
+                moviesQueryable = moviesQueryable.Where(m => m.InCinemas);
+            }
+
+            if (movieFilterDTO.UpcomingReleases)
+            {
+                var today = DateTime.Today;
+                moviesQueryable = moviesQueryable.Where(m => m.ReleaseDate > today);
+            }
+
+            if (movieFilterDTO.GenreId != 0)
+            {
+                moviesQueryable = moviesQueryable
+                                .Where(m => m.Genres.Select(g => g.Id).Contains(movieFilterDTO.GenreId));
+            }
+
+            var movies = await moviesQueryable.Include(m => m.Genres).ToListAsync();
+            return mapper.Map<List<MovieDTO>>(movies);
+        }
     }
 }

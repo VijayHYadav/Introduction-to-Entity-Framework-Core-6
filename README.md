@@ -18,6 +18,16 @@ int number = 5;
 // find closest to number
 int closest = list.OrderBy(item => Math.Abs(number - item)).First();
 
+
+Entity Framework Core helps us query data from our database using linq code.
+
+- Query
+- Eager Loading
+- Select Loading
+- Explicit Loading
+- Lazy Loading
+- Deferred  Execution
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

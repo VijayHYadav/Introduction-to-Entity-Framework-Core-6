@@ -8,7 +8,7 @@ namespace EFCoreMovies.Entities
         public string Name { get; set; }
         public string Biography { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public virtual HashSet<MovieActor> MoviesActors { get; set; }
+        public HashSet<MovieActor> MoviesActors { get; set; }
 
     }
 }

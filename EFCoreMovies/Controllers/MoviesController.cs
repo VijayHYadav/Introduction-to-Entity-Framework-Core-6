@@ -150,12 +150,39 @@ namespace EFCoreMovies.Controllers
             return movieDTO;
 
             // var movies = await context.Movies.ToListAsync();
-            // n + 1 problem
+            // * n + 1 problem
             // foreach (var movie in movies)
             // {
             //     // loading the  genres of the 'movie'
             //     movie.Genres.ToList();
             // }
+        }
+
+        [HttpGet("groupedByCinema")]
+        public async Task<ActionResult> GetGroupedByCinema()
+        {
+            var groupedMovies = await context.Movies.GroupBy(m => m.InCinemas).Select(g => new
+            {
+                InCinemas = g.Key,
+                Count = g.Count(),
+                Movies = g.ToList()
+            }).ToListAsync();
+
+            return Ok(groupedMovies);
+        }
+
+        [HttpGet("groupByGenresCount")]
+        public async Task<ActionResult> GetGroupedByGenresCount()
+        {
+            var groupedMovies = await context.Movies.GroupBy(m => m.Genres.Count()).Select(g => new
+            {
+                Count = g.Key,
+                Titles = g.Select(m => m.Title),
+                // * SelectMany => is you to flatten the collection of collections into any single collection.
+                Genres = g.Select(m => m.Genres).SelectMany(a => a).Select(ge => ge.Name).Distinct()
+            }).ToListAsync();
+
+            return Ok(groupedMovies);
         }
     }
 }

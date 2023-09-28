@@ -8,8 +8,8 @@ namespace EFCoreMovies.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public Point Location { get; set; }
-        public CinemaOffer CinemaOffer { get; set; }
-        public HashSet<CinemaHall> CinemaHalls { get; set; }
+        public virtual CinemaOffer CinemaOffer { get; set; }
+        public virtual HashSet<CinemaHall> CinemaHalls { get; set; }
     }
 }
 

@@ -135,5 +135,27 @@ namespace EFCoreMovies.Controllers
                 GenresCount = genresCount
             });
         }
+
+        // I don't really see the real benefit of using something like lazy loading.
+        // You can definitely load the related data in subsequent queries if you want using something like Explicit Loading, Deferred Execution
+        [HttpGet("lazyloading/{id:int}")]
+        public async Task<ActionResult<MovieDTO>> GetLazyLoading(int id)
+        {
+            var movie = await context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+
+            var movieDTO = mapper.Map<MovieDTO>(movie);
+
+            movieDTO.Cinemas = movieDTO.Cinemas.DistinctBy(x => x.Id).ToList();
+
+            return movieDTO;
+
+            // var movies = await context.Movies.ToListAsync();
+            // n + 1 problem
+            // foreach (var movie in movies)
+            // {
+            //     // loading the  genres of the 'movie'
+            //     movie.Genres.ToList();
+            // }
+        }
     }
 }

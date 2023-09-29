@@ -15,6 +15,8 @@ namespace EFCoreMovies.Utilites
                 .ForMember(dto => dto.Longitude, ent => ent.MapFrom(p => p.Location.X));
 
             CreateMap<Genre, GenreDTO>();
+            CreateMap<GenreCreationDTO, Genre>();
+
 
             // System.ArgumentException: .NET number values such as positive and negative infinity cannot be written as valid JSON. To make it work when using 'JsonSerializer', consider specifying 'JsonNumberHandling.AllowNamedFloatingPointLiterals'
             CreateMap<Movie,MovieDTO>()

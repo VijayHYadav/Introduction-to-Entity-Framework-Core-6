@@ -40,6 +40,22 @@ namespace EFCoreMovies.Controllers
             return Ok();
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(ActorCreationDTO actorCreationDTO, int id)
+        {
+            var actorDB = await context.Actors.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (actorDB is null)
+            {
+                return NotFound();
+            }
+
+            // ! (TRICK) if in these object(actorCreationDTO) we express one change, for example, the biography or the name, then only that property will get updated in that query.
+            actorDB = mapper.Map(actorCreationDTO, actorDB);
+
+            await context.SaveChangesAsync();
+            return Ok();
+        }
 
     }
 }

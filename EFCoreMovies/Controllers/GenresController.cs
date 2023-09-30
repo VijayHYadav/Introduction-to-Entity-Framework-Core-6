@@ -27,7 +27,21 @@ namespace EFCoreMovies.Controllers
             return await context.Generes.AsNoTracking().ToListAsync();
         }
 
-        
+        [HttpPost("add2")]
+        public async Task<ActionResult> Add2(int id)
+        {
+            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            genre.Name += " 2";
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post(GenreCreationDTO genreCreationDTO) {
 

@@ -53,5 +53,41 @@ namespace EFCoreMovies.Controllers
 
             return Ok(cinemas);
         }
+    
+        [HttpPost]
+        public async Task<ActionResult> Post()
+        {
+            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+            var cinemaLocation = geometryFactory.CreatePoint(new Coordinate(-69.913539, 18.476256));
+
+            var cinema = new Cinema()
+            {
+                Name = "My cinema",
+                Location = cinemaLocation,
+                CinemaOffer = new CinemaOffer()
+                {
+                    DiscountPercentage = 5,
+                    Begin = DateTime.Today,
+                    End = DateTime.Today.AddDays(7)
+                },
+                CinemaHalls = new HashSet<CinemaHall>()
+                {
+                    new CinemaHall()
+                    {
+                        Cost = 200,
+                        CinemaHallType = CinemaHallType.TwoDimensions
+                    },
+                     new CinemaHall()
+                    {
+                        Cost = 250,
+                        CinemaHallType = CinemaHallType.ThreeDimensions
+                    }
+                }
+            };
+
+            context.Add(cinema);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

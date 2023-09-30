@@ -10,6 +10,8 @@ namespace EFCoreMovies.Entities.Configurations
         {
         builder.Property(p => p.Name).IsRequired();
         builder.Property(p => p.Biography).HasColumnType("nvarchar(max)");
+
+        // builder.Property(p => p.Name).HasField("_name");
         }
     }
 }

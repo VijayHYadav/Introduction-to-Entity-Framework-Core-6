@@ -27,6 +27,12 @@ Statuses
 - Deleted
 - Detached
 
+Flexible Mapping
+When we create an entity, sometimes we only use properties which will represent columns in a table, in sqlserver Typically this is fine.
+But there may be other locations in which we may want to use a combination of properties and fields.
+The idea is that we may want to use a field to represent our column in the sqlserver table. We will use the property to do a transformation 
+over the data that we are about to insert or modify. We call this flexible mapping.
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

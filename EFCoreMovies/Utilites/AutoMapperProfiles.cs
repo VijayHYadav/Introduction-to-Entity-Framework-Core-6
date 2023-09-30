@@ -43,6 +43,9 @@ namespace EFCoreMovies.Utilites
                             prop.CinemaHallsIds.Select(id => new CinemaHall() { Id = id })));
 
             CreateMap<MovieActorCreationDTO, MovieActor>();
+
+            CreateMap<ActorCreationDTO, Actor>();
+
         }
     }
 }

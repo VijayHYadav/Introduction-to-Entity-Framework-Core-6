@@ -31,5 +31,15 @@ namespace EFCoreMovies.Controllers
                 .ToListAsync();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Post(ActorCreationDTO actorCreationDTO)
+        {
+            var actor = mapper.Map<Actor>(actorCreationDTO);
+            context.Add(actor);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+
     }
 }

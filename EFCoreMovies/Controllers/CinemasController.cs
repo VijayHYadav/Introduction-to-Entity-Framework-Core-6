@@ -99,5 +99,52 @@ namespace EFCoreMovies.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpPut("cinemaOffer")]
+        public async Task<ActionResult> PutCinemaOffer(CinemaOffer cinemaOffer)
+        {
+            context.Update(cinemaOffer);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var cinemaDB = await context.Cinemas
+               .Include(c => c.CinemaHalls)
+               .Include(c => c.CinemaOffer)
+               .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cinemaDB is null)
+            {
+                return NotFound();
+            }
+
+            cinemaDB.Location = null;
+
+            return Ok(cinemaDB);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(CinemaCreationDTO cinemaCreationDTO, int id)
+        {
+            var cinemaDB = await context.Cinemas
+                    // ! You have to say include because 
+                    // ! in this way we will be able to update also the related entities.
+                .Include(c => c.CinemaHalls)
+                .Include(c => c.CinemaOffer)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (cinemaDB is null)
+            {
+                return NotFound();
+            }
+
+            cinemaDB = mapper.Map(cinemaCreationDTO, cinemaDB);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }

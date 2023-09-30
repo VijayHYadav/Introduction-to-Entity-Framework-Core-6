@@ -24,7 +24,7 @@ namespace EFCoreMovies.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<Genre>> Get() {
-            return await context.Generes.AsNoTracking().ToListAsync();
+            return await context.Generes.AsNoTracking().Where(p => !p.isDeleted).ToListAsync();
         }
 
         [HttpPost("add2")]
@@ -101,5 +101,21 @@ namespace EFCoreMovies.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpDelete("softdelete/{id:int}")]
+        public async Task<ActionResult> SoftDelete(int id)
+        {
+            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            genre.isDeleted = true;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }

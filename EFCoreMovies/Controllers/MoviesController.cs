@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreMovies.Controllers
 {
+    [ApiController]
     [Route("api/movies")]
     public class MoviesController : ControllerBase
     {
@@ -34,6 +35,27 @@ namespace EFCoreMovies.Controllers
 
             return movieDTO;
         }
-       
+
+        [HttpPost]
+        public async Task<ActionResult> Post(MovieCreationDTO movieCreationDTO)
+        {
+            var movie = mapper.Map<Movie>(movieCreationDTO);
+
+            // ! And in this way, I am saying that we don't want to create those genres again.
+            movie.Genres.ForEach(g => context.Entry(g).State = EntityState.Unchanged);
+            movie.cinemaHalls.ForEach(ch => context.Entry(ch).State = EntityState.Unchanged);
+
+            if (movie.MoviesActors is not null)
+            {
+                for (int i = 0; i < movie.MoviesActors.Count; i++)
+                {
+                    movie.MoviesActors[i].Order = i + 1;
+                }
+            }
+
+            context.Add(movie);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

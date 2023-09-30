@@ -62,5 +62,14 @@ namespace EFCoreMovies.Controllers
             return Ok();
         }
 
+        [HttpPost("several")]
+        public async Task<ActionResult> Post(GenreCreationDTO[] genresDTO)
+        {
+            var genres = mapper.Map<Genre[]>(genresDTO);
+            context.AddRange(genres);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }

@@ -33,6 +33,14 @@ But there may be other locations in which we may want to use a combination of pr
 The idea is that we may want to use a field to represent our column in the sqlserver table. We will use the property to do a transformation 
 over the data that we are about to insert or modify. We call this flexible mapping.
 
+Agenda
+- Configuration
+- Primary keys
+- Ignore
+- Idexes, conversions
+- Shadow properties
+- Automating configurations
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

@@ -1,6 +1,8 @@
 using AutoMapper;
 using EFCoreMovies.DTOs;
 using EFCoreMovies.Entities;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 
 namespace EFCoreMovies.Utilites
 {
@@ -24,6 +26,15 @@ namespace EFCoreMovies.Utilites
                 .ForMember(dto  => dto.Cinemas, ent =>  
                     ent.MapFrom(p => p.cinemaHalls.OrderByDescending(ch =>  ch.Cinema.Name).Select(c  => c.Cinema)))
                 .ForMember(dto => dto.Actors, ent => ent.MapFrom(p => p.MoviesActors.Select(ma => ma.Actor)));
+
+            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+
+            CreateMap<CinemaCreationDTO, Cinema>()
+                .ForMember(ent => ent.Location, dto =>
+                    dto.MapFrom(prop => geometryFactory.CreatePoint(new Coordinate(prop.Longitude, prop.Latitude))));
+
+            CreateMap<CinemaOfferCreationDTO, CinemaOffer>();
+            CreateMap<CinemaHallCreationDTO, CinemaHall>();
         }
     }
 }

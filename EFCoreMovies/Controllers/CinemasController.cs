@@ -15,6 +15,7 @@ using NetTopologySuite.Geometries;
 
 namespace EFCoreMovies.Controllers
 {
+    [ApiController]
     [Route("api/cinemas")]
     public class CinemasController : Controller
     {
@@ -85,6 +86,15 @@ namespace EFCoreMovies.Controllers
                 }
             };
 
+            context.Add(cinema);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost("withDTO")]
+        public async Task<ActionResult> Post(CinemaCreationDTO cinemaCreationDTO)
+        {
+            var cinema = mapper.Map<Cinema>(cinemaCreationDTO);
             context.Add(cinema);
             await context.SaveChangesAsync();
             return Ok();

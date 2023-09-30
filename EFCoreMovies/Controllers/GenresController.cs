@@ -85,5 +85,21 @@ namespace EFCoreMovies.Controllers
             return Ok();
         }
 
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            // ! This remove the genre that we have here is the one that changes the status of the genre entity into deleted.
+            context.Remove(genre);
+
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

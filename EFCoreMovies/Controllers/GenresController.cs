@@ -24,7 +24,7 @@ namespace EFCoreMovies.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<Genre>> Get() {
-            return await context.Generes.AsNoTracking().Where(p => !p.isDeleted).ToListAsync();
+            return await context.Generes.AsNoTracking().ToListAsync();
         }
 
         [HttpPost("add2")]
@@ -116,6 +116,23 @@ namespace EFCoreMovies.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpPost("restore/{id:int}")]
+        public async Task<ActionResult> Restore(int id)
+        {
+            // ! This is how we can ignore all of them query filtersIgnoreQueryFilters.
+            var genre = await context.Generes.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id == id);
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            genre.isDeleted = false;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
 
     }
 }

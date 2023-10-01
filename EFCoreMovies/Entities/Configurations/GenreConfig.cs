@@ -13,7 +13,7 @@ namespace EFCoreMovies.Entities.Configurations
 
             builder.HasIndex(p => p.Name).IsUnique().HasFilter("isDeleted = 'false'");
 
-            builder.Property<DateTime>("CreatedDate").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");
+            // builder.Property<DateTime>("CreatedDate").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");
         }
     }
 }

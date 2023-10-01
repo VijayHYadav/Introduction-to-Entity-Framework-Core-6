@@ -55,6 +55,8 @@ Keyless Entities
 - They allow us to centralize queries.
 - We don't have to worry about the change tracker.
 
+Summary Configurations, Primary Keys, Ignore, Indexes, Value Conversions, Keyless entities, Shadow Properties, Automating Configurations.
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

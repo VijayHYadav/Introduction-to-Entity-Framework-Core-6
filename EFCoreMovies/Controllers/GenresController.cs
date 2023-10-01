@@ -60,6 +60,10 @@ namespace EFCoreMovies.Controllers
                 and therefore there is nothing to do with it with the database. So no updating records, no adding 
                 new records or no deleting any records because the status is unchanged.
             */
+            
+            var genreExists = await context.Generes.AnyAsync(p => p.Name == genreCreationDTO.Name);
+
+            if (genreExists) return BadRequest($"The genre with name {genreCreationDTO.Name} already exists.");
 
             var genre = mapper.Map<Genre>(genreCreationDTO);
 

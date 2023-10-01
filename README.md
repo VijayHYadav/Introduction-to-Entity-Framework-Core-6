@@ -44,6 +44,11 @@ Agenda
 Configuration Modes
 - When we talk about configurations, we mean defining the behaviour of EF Core when certain things happen.
 
+Indexes
+- We can configure indexes in our tables to increase the speed of certain queries.
+- Indexes can be configured as unique.
+- Primary keys are already configured as unique indexes.
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

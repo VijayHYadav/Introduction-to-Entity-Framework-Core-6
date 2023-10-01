@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCoreMovies.Entities
 {
+    [Index(nameof(Name), IsUnique = true)]
     public class Genre
     {
         public int Id { get; set; }

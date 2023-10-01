@@ -26,6 +26,8 @@ namespace EFCoreMovies
 
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
 
+            modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
+
             modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
         }

@@ -11,7 +11,7 @@ namespace EFCoreMovies.Entities.Configurations
 
             builder.HasQueryFilter(g => !g.isDeleted);
 
-            // builder.HasIndex(p => p.Name).IsUnique();
+            builder.HasIndex(p => p.Name).IsUnique().HasFilter("isDeleted = 'false'");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EFCoreMovies.Entities;
+using EFCoreMovies.Entities.Keyless;
 using EFCoreMovies.Entities.Seeding;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -23,6 +24,8 @@ namespace EFCoreMovies
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             Module3Seeding.Seed(modelBuilder);
 
+            modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
+
             modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
         }
@@ -35,5 +38,6 @@ namespace EFCoreMovies
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         public DbSet<MovieActor> MoviesActors { get; set; }
         public DbSet<Log> Logs { get; set; }
+        // public DbSet<CinemaWithoutLocation> CinemaWithoutLocations { get; set; }
     }
 }

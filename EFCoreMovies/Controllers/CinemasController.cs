@@ -7,6 +7,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EFCoreMovies.DTOs;
 using EFCoreMovies.Entities;
+using EFCoreMovies.Entities.Keyless;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -31,6 +32,14 @@ namespace EFCoreMovies.Controllers
         [HttpGet]
         public async Task<IEnumerable<CinemaDTO>> Get() {
             return await context.Cinemas.ProjectTo<CinemaDTO>(mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        [HttpGet("withoutLocation")]
+        public async Task<IEnumerable<CinemaWithoutLocation>> GetWithoutLocation()
+        {
+            // ! set allows us to create a DB set on the fly.
+            return await context.Set<CinemaWithoutLocation>().ToListAsync();
+            //return await context.CinemasWithoutLocations.ToListAsync();
         }
 
         [HttpGet("closetome")]

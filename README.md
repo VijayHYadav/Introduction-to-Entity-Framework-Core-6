@@ -49,6 +49,12 @@ Indexes
 - Indexes can be configured as unique.
 - Primary keys are already configured as unique indexes.
 
+Keyless Entities
+- They allow us to express the result of an arbitrary query in terms of a class.
+    so, we can enjoy the advantages of a strongly-typed language when consuming arbitrary queries.
+- They allow us to centralize queries.
+- We don't have to worry about the change tracker.
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

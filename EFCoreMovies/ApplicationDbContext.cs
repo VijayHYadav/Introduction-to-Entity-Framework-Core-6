@@ -22,6 +22,8 @@ namespace EFCoreMovies
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             Module3Seeding.Seed(modelBuilder);
+
+            // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
         }
 
         public DbSet<Genre> Generes { get; set; }
@@ -31,5 +33,6 @@ namespace EFCoreMovies
         public DbSet<CinemaOffer> CinemaOffers { get; set; }
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         public DbSet<MovieActor> MoviesActors { get; set; }
+        public DbSet<Log> Logs { get; set; }
     }
 }

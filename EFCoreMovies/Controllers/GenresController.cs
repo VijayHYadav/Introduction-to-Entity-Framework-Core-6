@@ -24,6 +24,9 @@ namespace EFCoreMovies.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<Genre>> Get() {
+            context.Logs.Add(new Log { Message = "Executing Get from GenresController" });
+            // * context.Logs.Add(new Log { Id = Guid.NewGuid(), Message = "Executing Get from GenresController" });
+            await context.SaveChangesAsync();
             return await context.Generes.AsNoTracking().ToListAsync();
         }
 

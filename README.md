@@ -63,6 +63,29 @@ Agenda
 - OnDelet
 - Relationship types
 
+Basic Types of Relationships
+- One-to-One relationships
+- One-to-Many relationships
+- Many-to-Many relationships
+Concepts
+- Principle Key : Principal key typically refers to the primary key through which entities are linked.
+For example, in our case of cinemas and cinema halls, there is typically a field in cinema halls that links the cinema hall to the corresponding cinema.
+The value of this field is usually equal to the primary key in this case of the cinema entity. Although this does not have to be the case since we can 
+configure an alternative key with which we can make the relationship.
+
+- Principle entity: The principal entity is the one that contains the principal key. In the case of our example of cinemas and cinema halls, the principal entity is cinema.
+
+- Dependent entity: The dependent entity is the one that does not contain the primary key as a column of its own. In the case of cinema halls, it does not contain the value of the primary key as its own value, but rather uses to link to a cinema foreign key.
+
+- Foreign key : This refers to a property of an entity that links to other related entities.
+For example, in the case of cinema, the property that contains a collection of cinema halls is an
+example of an obligation property.
+
+
+- Navigation property
+- Required relationship
+- Optional relationship
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

@@ -12,6 +12,8 @@ namespace EFCoreMovies.Entities.Configurations
             builder.HasQueryFilter(g => !g.isDeleted);
 
             builder.HasIndex(p => p.Name).IsUnique().HasFilter("isDeleted = 'false'");
+
+            builder.Property<DateTime>("CreatedDate").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");
         }
     }
 }

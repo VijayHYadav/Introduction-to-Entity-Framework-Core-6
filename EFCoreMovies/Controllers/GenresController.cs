@@ -27,7 +27,29 @@ namespace EFCoreMovies.Controllers
             context.Logs.Add(new Log { Message = "Executing Get from GenresController" });
             // * context.Logs.Add(new Log { Id = Guid.NewGuid(), Message = "Executing Get from GenresController" });
             await context.SaveChangesAsync();
-            return await context.Generes.AsNoTracking().ToListAsync();
+            return await context.Generes
+                .AsNoTracking()
+                // ! this is how we can short by Shadow Property
+                // .OrderByDescending(g => EF.Property<DateTime>(g, "CreatedDate"))
+                .ToListAsync();
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Genre>> Get(int id){
+            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (genre is null) {
+                return NotFound();
+            }
+
+            var createdDate  = context.Entry(genre).Property<DateTime>("CreatedDate").CurrentValue;
+
+            return Ok(new
+            {
+                Id = genre.Id,
+                Name = genre.Name,
+                createdDate = createdDate
+            });
         }
 
         [HttpPost("add2")]

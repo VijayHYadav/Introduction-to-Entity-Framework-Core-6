@@ -57,6 +57,12 @@ Keyless Entities
 
 Summary Configurations, Primary Keys, Ignore, Indexes, Value Conversions, Keyless entities, Shadow Properties, Automating Configurations.
 
+Agenda
+- Basic concepts
+- Configurations
+- OnDelet
+- Relationship types
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

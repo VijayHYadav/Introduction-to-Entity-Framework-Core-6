@@ -41,6 +41,9 @@ Agenda
 - Shadow properties
 - Automating configurations
 
+Configuration Modes
+- When we talk about configurations, we mean defining the behaviour of EF Core when certain things happen.
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

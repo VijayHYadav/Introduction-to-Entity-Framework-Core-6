@@ -8,7 +8,15 @@ namespace EFCoreMovies.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<MovieActor> builder)
         {
+            // * Composite Primary Key
             builder.HasKey(p => new { p.MovieId, p.ActorId });
         }
     }
 }
+
+// * Composite Primary Key
+// A Composite Primary Key is created by combining two or more columns in a 
+// table that can be used to uniquely identify each row in the table when the 
+// columns are combined, but it does not guarantee uniqueness when taken individually, 
+// or it can also be understood as a primary key created by combining two or more attributes 
+// to uniquely identify every row in a table.

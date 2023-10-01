@@ -9,7 +9,8 @@ namespace EFCoreMovies.Entities.Configurations
         public void Configure(EntityTypeBuilder<CinemaHall> builder)
         {
             builder.Property(p => p.Cost).HasColumnType("decimal").HasPrecision(precision: 9, scale: 2);
-            builder.Property(p => p.CinemaHallType).HasDefaultValue(CinemaHallType.TwoDimensions);
+            builder.Property(p => p.CinemaHallType).HasDefaultValue(CinemaHallType.TwoDimensions)
+                .HasConversion<string>();
         }
     }
 }

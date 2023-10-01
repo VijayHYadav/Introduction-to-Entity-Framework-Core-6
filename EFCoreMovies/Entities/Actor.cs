@@ -44,6 +44,7 @@ namespace EFCoreMovies.Entities
             }
         }
 
+        public string PictureURL { get; set; }
         public HashSet<MovieActor> MoviesActors { get; set; }
         public Address Address { get; set; }
 

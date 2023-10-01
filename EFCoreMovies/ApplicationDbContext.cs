@@ -30,6 +30,16 @@ namespace EFCoreMovies
 
             modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(string) && property.Name.Contains("URL",StringComparison.CurrentCultureIgnoreCase)) {
+                        property.SetIsUnicode(false);
+                    }
+                }
+            }
         }
 
         public DbSet<Genre> Generes { get; set; }

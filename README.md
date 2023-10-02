@@ -98,6 +98,17 @@ Client Set Null
 Owned Types:  Owen types allows us to separate columns from a table in different classes.
 The main difference is that with own properties or own types that depend on entity can be used in several entities.
 
+Summary
+- Principal and dependent entity
+- Configurations
+- Conventions
+- Data Annotations
+- Fluent API
+- Table Splitting
+- Owned types
+- Table-per-hierachy
+- Table-per-type
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

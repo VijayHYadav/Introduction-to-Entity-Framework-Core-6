@@ -45,14 +45,14 @@ namespace EFCoreMovies.Entities.Seeding
             var cinemaHall2DAgora = new CinemaHall()
             {
                 Id = 1,
-                CinemaId = agora.Id,
+                TheCinemaId = agora.Id,
                 Cost = 220,
                 CinemaHallType = CinemaHallType.TwoDimensions
             };
             var cinemaHall3DAgora = new CinemaHall()
             {
                 Id = 2,
-                CinemaId = agora.Id,
+                TheCinemaId = agora.Id,
                 Cost = 320,
                 CinemaHallType = CinemaHallType.ThreeDimensions
             };
@@ -60,14 +60,14 @@ namespace EFCoreMovies.Entities.Seeding
             var cinemaHall2DSambil = new CinemaHall()
             {
                 Id = 3,
-                CinemaId = sambil.Id,
+                TheCinemaId = sambil.Id,
                 Cost = 200,
                 CinemaHallType = CinemaHallType.TwoDimensions
             };
             var cinemaHall3DSambil = new CinemaHall()
             {
                 Id = 4,
-                CinemaId = sambil.Id,
+                TheCinemaId = sambil.Id,
                 Cost = 290,
                 CinemaHallType = CinemaHallType.ThreeDimensions
             };
@@ -76,21 +76,21 @@ namespace EFCoreMovies.Entities.Seeding
             var cinemaHall2DMegacentro = new CinemaHall()
             {
                 Id = 5,
-                CinemaId = megacentro.Id,
+                TheCinemaId = megacentro.Id,
                 Cost = 250,
                 CinemaHallType = CinemaHallType.TwoDimensions
             };
             var cinemaHall3DMegacentro = new CinemaHall()
             {
                 Id = 6,
-                CinemaId = megacentro.Id,
+                TheCinemaId = megacentro.Id,
                 Cost = 330,
                 CinemaHallType = CinemaHallType.ThreeDimensions
             };
             var cinemaHallCXCMegacentro = new CinemaHall()
             {
                 Id = 7,
-                CinemaId = megacentro.Id,
+                TheCinemaId = megacentro.Id,
                 Cost = 450,
                 CinemaHallType = CinemaHallType.CXC
             };
@@ -98,7 +98,7 @@ namespace EFCoreMovies.Entities.Seeding
             var cinemaHall2DAcropolis = new CinemaHall()
             {
                 Id = 8,
-                CinemaId = acropolis.Id,
+                TheCinemaId = acropolis.Id,
                 Cost = 250,
                 CinemaHallType = CinemaHallType.TwoDimensions
             };

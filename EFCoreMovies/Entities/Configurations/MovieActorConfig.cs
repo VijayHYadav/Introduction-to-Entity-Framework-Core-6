@@ -10,6 +10,12 @@ namespace EFCoreMovies.Entities.Configurations
         {
             // * Composite Primary Key
             builder.HasKey(p => new { p.MovieId, p.ActorId });
+
+            // * n-n relationship
+            builder.HasOne(p => p.Actor).WithMany(p => p.MoviesActors).HasForeignKey(p => p.ActorId);
+
+            // * n-n relationship
+            builder.HasOne(p => p.Movie).WithMany(p => p.MoviesActors).HasForeignKey(p => p.MovieId);
         }
     }
 }

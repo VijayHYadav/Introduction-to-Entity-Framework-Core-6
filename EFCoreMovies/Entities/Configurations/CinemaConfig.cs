@@ -14,6 +14,9 @@ namespace EFCoreMovies.Entities.Configurations
 
             // 1-n Relationship
             builder.HasMany(c => c.CinemaHalls).WithOne(ch => ch.Cinema).HasForeignKey(co =>co.TheCinemaId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.CinemaDetail).WithOne(c => c.Cinema).HasForeignKey<CinemaDetail>(cd => cd.Id);
+
         }
     }
 }

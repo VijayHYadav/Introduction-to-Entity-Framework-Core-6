@@ -54,5 +54,7 @@ namespace EFCoreMovies
         // public DbSet<CinemaWithoutLocation> CinemaWithoutLocations { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<CinemaDetail> CinemaDetails { get; set; }
+
     }
 }

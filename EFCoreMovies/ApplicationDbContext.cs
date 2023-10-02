@@ -29,6 +29,31 @@ namespace EFCoreMovies
 
             modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
 
+            modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
+            modelBuilder.Entity<RentableMovie>().ToTable("RentableMovies");
+
+            var movie1 = new RentableMovie()
+            {
+                Id = 1,
+                Name = "Spider-Man",
+                MovieId = 1,
+                Price = 5.99m
+            };
+
+            var merch1 = new Merchandising()
+            {
+                Id = 2,
+                Available = true,
+                IsClothing = true,
+                Name = "One Piece T-Shirt",
+                Weight = 1,
+                Volume = 1,
+                Price = 11
+            };
+
+            modelBuilder.Entity<Merchandising>().HasData(merch1);
+            modelBuilder.Entity<RentableMovie>().HasData(movie1);
+
             // modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
 
@@ -56,5 +81,6 @@ namespace EFCoreMovies
         public DbSet<Message> Messages { get; set; }
         public DbSet<CinemaDetail> CinemaDetails { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace EFCoreMovies.Entities.Configurations
                 .HasMaxLength(250).IsRequired();
             builder.Property(p => p.PosterURL).HasMaxLength(500).IsUnicode(false);
 
+            builder.HasMany(p => p.Genres).WithMany(p => p.Movies);
+                //.UsingEntity(j => j.ToTable("GenresMovies").HasData(new {moviesId = 1, GenresId = 7}));
         }
     }
 }

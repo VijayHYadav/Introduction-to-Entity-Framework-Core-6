@@ -23,6 +23,7 @@ namespace EFCoreMovies
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             Module3Seeding.Seed(modelBuilder);
+            Module6Seeding.Seed(modelBuilder);
 
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
 
@@ -51,5 +52,7 @@ namespace EFCoreMovies
         public DbSet<MovieActor> MoviesActors { get; set; }
         public DbSet<Log> Logs { get; set; }
         // public DbSet<CinemaWithoutLocation> CinemaWithoutLocations { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 {
     "editor.renderWhitespace": "all",
     "workbench.colorCustomizations": {
-      "editorWhitespace.foreground": "#9e9d9d"
+      "editorWhitespace.foreground": "#6b4747"
     }
   }
   

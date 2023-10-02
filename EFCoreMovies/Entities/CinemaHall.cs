@@ -8,7 +8,7 @@ namespace EFCoreMovies.Entities
         public CinemaHallType CinemaHallType { get; set; }
         public decimal Cost { get; set; }
         public Currency Currency { get; set; }
-        public int? TheCinemaId { get; set; }
+        public int TheCinemaId { get; set; }
         // If I have a cinema hall, I will be able to query
         // the data of the corresponding cinema with a single
         // function by using this navigation property.

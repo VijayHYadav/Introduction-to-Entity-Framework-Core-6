@@ -86,6 +86,16 @@ example of an obligation property.
 - Required relationship
 - Optional relationship
 
+- OnDelete
+Cascade
+Client Cascade
+No Action
+Client No Action
+Restrict
+Set Null
+Client Set Null
+
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

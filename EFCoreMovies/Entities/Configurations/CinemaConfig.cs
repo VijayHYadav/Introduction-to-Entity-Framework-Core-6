@@ -13,7 +13,16 @@ namespace EFCoreMovies.Entities.Configurations
             builder.HasOne(c => c.CinemaOffer).WithOne().HasForeignKey<CinemaOffer>(co =>co.CinemaId);
 
             // 1-n Relationship
-            builder.HasMany(c => c.CinemaHalls).WithOne(ch => ch.Cinema).HasForeignKey(co =>co.TheCinemaId);
+            builder.HasMany(c => c.CinemaHalls).WithOne(ch => ch.Cinema).HasForeignKey(co =>co.TheCinemaId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
+
+// * OnDelete
+// Cascade :  The dependent entities are deleted if the principal entity is also deleted
+// Client Cascade
+// No Action : no action
+// Client No Action
+// Restrict : the action that is going to happen in the principal entity is not going to be done in the dependent entities.
+// Set Null :  In this case we simply put null in the column of the foreign key
+// Client Set Null :  we put null from the applications.

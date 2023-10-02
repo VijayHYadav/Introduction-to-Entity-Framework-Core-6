@@ -17,6 +17,12 @@ namespace EFCoreMovies.Entities.Configurations
 
             builder.HasOne(c => c.CinemaDetail).WithOne(c => c.Cinema).HasForeignKey<CinemaDetail>(cd => cd.Id);
 
+            builder.OwnsOne(c => c.Address, add =>
+            {
+                add.Property(p => p.Street).HasColumnName("Street");
+                add.Property(p => p.Province).HasColumnName("Province");
+                add.Property(p => p.Country).HasColumnName("Country");
+            });
         }
     }
 }

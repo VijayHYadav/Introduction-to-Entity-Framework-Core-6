@@ -29,7 +29,7 @@ namespace EFCoreMovies
 
             modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
 
-            modelBuilder.Ignore<Address>();
+            // modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
 
             // foreach (var entityType in modelBuilder.Model.GetEntityTypes())

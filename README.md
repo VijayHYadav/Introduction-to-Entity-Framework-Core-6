@@ -95,6 +95,8 @@ Restrict
 Set Null
 Client Set Null
 
+Owned Types:  Owen types allows us to separate columns from a table in different classes.
+The main difference is that with own properties or own types that depend on entity can be used in several entities.
 
 ```
 ![Alt text](resources/image.png)

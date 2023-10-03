@@ -121,6 +121,13 @@ Agenda
 >>Get-Help Add-Migration -detailed
 >>Get-Help Add-Migration -full
 
+>>dotnet ef migrations add GenresExample
+>>Add-Migration GenresExample
+
+So if we add a new entity, a new property, or we make changes to the configuration of our model using
+the fluent API, we have to make a migration to generate a class that will indicate the changes that
+are going to occur in our database.
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

@@ -109,6 +109,13 @@ Summary
 - Table-per-hierachy
 - Table-per-type
 
+Agenda
+- Get-Help
+- Modifying migrations
+- Script-Migration
+- Compiled models
+- Database-First
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

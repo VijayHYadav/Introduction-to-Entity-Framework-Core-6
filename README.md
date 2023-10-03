@@ -116,6 +116,11 @@ Agenda
 - Compiled models
 - Database-First
 
+>>dotnet ef migrations add --help
+>>Get-Help Add-Migration
+>>Get-Help Add-Migration -detailed
+>>Get-Help Add-Migration -full
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

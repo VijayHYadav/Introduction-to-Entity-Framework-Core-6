@@ -124,10 +124,17 @@ Agenda
 >>dotnet ef migrations add GenresExample
 >>Add-Migration GenresExample
 
+>>dotnet ef database update
+>>Update-Database
+>>Get-Help Update-Database
+>>Get-Help Update-Database -detailed
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.
 
+How does entity framework or knows which migrations has been applied and which migrations are pending?
+Well, it knows that because it does a query into a table call EFMigrationsHistory.
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

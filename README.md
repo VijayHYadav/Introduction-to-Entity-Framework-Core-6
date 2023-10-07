@@ -129,6 +129,22 @@ Agenda
 >>Get-Help Update-Database
 >>Get-Help Update-Database -detailed
 
+>>dotnet ef migrations remove
+>>Remove-Migration
+
+>>dotnet ef migrations remove --force
+>>Remove-Migration -Force
+
+Another way is to have a new migration that reverts the previous migration.
+This is useful for when in a migration you have serveral changes and maybe
+you don't want to revert them.
+
+>>dotnet ef migrations list
+>>Get-Migration
+
+>>dotnet ef migrations list --no-connect
+>>Get-Migration -NoConnect
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

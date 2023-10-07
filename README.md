@@ -185,6 +185,16 @@ using (var scope = app.Services.CreateScope())
     applicationDbContext.Database.Migrate();
 }
 
+Compiled Models
+- They allow us to optimize our models
+- It's not recommended if you have few entities.
+- It's not compatible with query filters.
+- It's not compatible with lazy loading.
+- When you make chanegs, you must remember to execute a command.
+>> dotnet efdbcontext optimize
+>> Optimize-DbContext
+options.UseModel(ApplicationDbContextModel.Instance);
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

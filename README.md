@@ -171,6 +171,20 @@ already been applied and if it has, then it will not be applied twice.
 
 IMP: You should prefer migration bundles over to you migration script if you have custom sql code in the migrations.
 
+Database.Migrate
+- With migrate we can apply migrations from our application
+- It's simple
+- We have to be careful if the app executes in parallel
+- There could be a timeout
+- The app may load slowly
+- If there's an error, it may be hard to debug
+Ex Database.Migrate
+using (var scope = app.Services.CreateScope())
+{
+    var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    applicationDbContext.Database.Migrate();
+}
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

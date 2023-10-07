@@ -159,6 +159,18 @@ going to run against our database then this is going to takecare of applying the
 >> dotnet ef migrations bundle --configuration Bundle --force
 >> .\efbundle.exe --connection "Server=.;Database=MigrationBundleEFCoreMovies;Integrated Security=True"
 
+The script migration command allows us to generate a sql script with a migration that we'have.
+>> dotnet ef migrations script
+>> Script-Migration
+
+Idempotent: allows us to generate the script that is going to take into account if migration has
+already been applied and if it has, then it will not be applied twice.
+>> dotnet ef migrations script --idempotent
+>> Script-Migration -Idempotent
+
+
+IMP: You should prefer migration bundles over to you migration script if you have custom sql code in the migrations.
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

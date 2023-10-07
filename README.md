@@ -145,6 +145,9 @@ you don't want to revert them.
 >>dotnet ef migrations list --no-connect
 >>Get-Migration -NoConnect
 
+>>dotnet ef database drop
+>>Drop-Database
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

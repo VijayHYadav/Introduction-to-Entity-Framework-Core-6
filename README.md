@@ -206,6 +206,19 @@ are going to occur in our database.
 
 How does entity framework or knows which migrations has been applied and which migrations are pending?
 Well, it knows that because it does a query into a table call EFMigrationsHistory.
+
+Summary
+- Get-Help
+- Add-Migration
+- Remove-Migration
+- Update-Database
+- Get-Migration
+- Migration-Bundles
+- Script-Migration
+- Database-Migrate
+- Compiled models
+- Database-First
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

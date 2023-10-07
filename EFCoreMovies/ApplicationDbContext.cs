@@ -8,9 +8,21 @@ namespace EFCoreMovies
 {
     public class ApplicationDbContext : DbContext
     {
+        // public ApplicationDbContext() {}
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
+
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     if (!optionsBuilder.IsConfigured)
+        //     {
+        //         optionsBuilder.UseSqlServer("name=DefaultConnection", options => {
+        //             options.UseNetTopologySuite();
+        //         });
+        //     }
+        // }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

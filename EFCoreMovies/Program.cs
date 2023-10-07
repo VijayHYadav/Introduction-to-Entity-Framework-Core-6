@@ -17,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlServer("name=DefaultConnection", sqlServer => sqlServer.UseNetTopologySuite());
     });
 
+// builder.Services.AddDbContext<ApplicationDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

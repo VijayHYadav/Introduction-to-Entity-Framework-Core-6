@@ -24,7 +24,24 @@ namespace EFCoreMovies
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             Module3Seeding.Seed(modelBuilder);
             Module6Seeding.Seed(modelBuilder);
+            SomeConfiguraton(modelBuilder);
 
+            // modelBuilder.Ignore<Address>();
+            // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
+
+            // foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            // {
+            //     foreach (var property in entityType.GetProperties())
+            //     {
+            //         if (property.ClrType == typeof(string) && property.Name.Contains("URL",StringComparison.CurrentCultureIgnoreCase)) {
+            //             property.SetIsUnicode(false);
+            //         }
+            //     }
+            // }
+        }
+
+        private static void SomeConfiguraton(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
 
             modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
@@ -53,19 +70,6 @@ namespace EFCoreMovies
 
             modelBuilder.Entity<Merchandising>().HasData(merch1);
             modelBuilder.Entity<RentableMovie>().HasData(movie1);
-
-            // modelBuilder.Ignore<Address>();
-            // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
-
-            // foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            // {
-            //     foreach (var property in entityType.GetProperties())
-            //     {
-            //         if (property.ClrType == typeof(string) && property.Name.Contains("URL",StringComparison.CurrentCultureIgnoreCase)) {
-            //             property.SetIsUnicode(false);
-            //         }
-            //     }
-            // }
         }
 
         public DbSet<Genre> Generes { get; set; }

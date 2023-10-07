@@ -219,6 +219,13 @@ Summary
 - Compiled models
 - Database-First
 
+Section 8: DbContext
+- Properties
+- OnConfigure
+- Updating state
+- Events
+- Transactions
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

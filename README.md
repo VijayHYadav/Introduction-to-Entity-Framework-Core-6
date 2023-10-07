@@ -226,6 +226,17 @@ Section 8: DbContext
 - Events
 - Transactions
 
+We have already seen that the db-context is the centerpiece of entity framework core what are you
+use called first or database first that db-context have some properties that allows us to do several
+advanced tasks.
+
+Properties
+- Databases
+- Change Tracker
+- Model
+- ContextId
+- 
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

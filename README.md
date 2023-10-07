@@ -150,6 +150,15 @@ you don't want to revert them.
 
 First Create a migration then modify it and then apply it.
 
+Migration Bundles => with migration bundles we create an executable which we are
+going to run against our database then this is going to takecare of applying the migrations.
+
+>> dotnet ef migrations bundle --configuration Bundle
+>> .\efbundle.exe --connection "Server=.;Database=MigrationBundleEFCoreMovies;Integrated Security=True"
+
+>> dotnet ef migrations bundle --configuration Bundle --force
+>> .\efbundle.exe --connection "Server=.;Database=MigrationBundleEFCoreMovies;Integrated Security=True"
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

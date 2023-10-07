@@ -195,6 +195,11 @@ Compiled Models
 >> Optimize-DbContext
 options.UseModel(ApplicationDbContextModel.Instance);
 
+>> dotnet ef dbcontext scaffold name=DefaultConnection Microsoft.EntityFrameworkCore.SqlServer --output-dir Models
+>> Scaffold-DbContext -Connection name=DefaultConnection -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+>> Scaffold-DbContext -Connection name=DefaultConnection -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+builder.Services.AddDbContext<EFCoreMoviesDbContext>();
+
 So if we add a new entity, a new property, or we make changes to the configuration of our model using
 the fluent API, we have to make a migration to generate a class that will indicate the changes that
 are going to occur in our database.

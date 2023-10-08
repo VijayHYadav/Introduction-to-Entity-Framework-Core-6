@@ -23,7 +23,10 @@ namespace EFCoreMovies.Controllers
 
         [HttpGet("withCounts")]
         public async Task<ActionResult<IEnumerable<MovieWithCounts>>> GetWithCounts() {
-            return  await context.Set<MovieWithCounts>().ToListAsync();
+            // return  await context.Set<MovieWithCounts>().ToListAsync();
+
+            // return  await context.Set<MovieWithCounts>().Where(p => p.Id == 1).ToListAsync();
+            return  await context.Set<MovieWithCounts>().Where(p => p.AmountCinemas > 0).ToListAsync();
         }
 
         [HttpGet("automapper/{id:int}")]

@@ -95,7 +95,18 @@ namespace EFCoreMovies
         {
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
 
-            modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
+            // modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
+
+            modelBuilder.Entity<MovieWithCounts>().ToSqlQuery(@"
+            sElEcT Id, Title,
+            (select count(*) from GenreMovie where MoviesId = movies.Id) as AmountGenres,
+            (select count(distinct moviesID) from CinemaHallMovie
+                inner join CinemaHalls
+                on CinemaHalls.Id = CinemaHallMovie.cinemaHallsId
+                where MoviesId = movies.Id) as AmountCinemas,
+            (select count(*) from MoviesActors where MovieId = movies.Id) as AmountActors
+            from Movies
+            ");
 
             modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
             modelBuilder.Entity<RentableMovie>().ToTable("RentableMovies");

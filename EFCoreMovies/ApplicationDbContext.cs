@@ -1,6 +1,7 @@
 ﻿using EFCoreMovies.Entities;
 using EFCoreMovies.Entities.Keyless;
 using EFCoreMovies.Entities.Seeding;
+using EFCoreMovies.Utilites;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -8,10 +9,13 @@ namespace EFCoreMovies
 {
     public class ApplicationDbContext : DbContext
     {
+        private readonly IUserService userService;
+
         // public ApplicationDbContext() {}
 
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options, IUserService userService) : base(options)
         {
+            this.userService = userService;
         }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -62,15 +66,15 @@ namespace EFCoreMovies
             foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added
                 && e.Entity is  AuditableEntity)) {
                     var entity = item.Entity as  AuditableEntity;
-                    entity.CreateBy = "Vizz";
-                    entity.ModifiedBy = "Vizz";
+                    entity.CreateBy = userService.GetUserId();
+                    entity.ModifiedBy = userService.GetUserId();
             }
 
             // ! ChangeTracker which allows to take a look into other entities that are being tracked.
             foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified
                 && e.Entity is  AuditableEntity)) {
                     var entity = item.Entity as  AuditableEntity;
-                    entity.ModifiedBy = "Vizz";
+                    entity.ModifiedBy = userService.GetUserId();
                     // * we are making sure that we never, never, never modify that CreateBy column.
                     item.Property(nameof(entity.CreateBy)).IsModified = false;
             }

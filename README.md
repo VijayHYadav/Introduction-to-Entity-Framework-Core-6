@@ -237,6 +237,16 @@ Properties
 - ContextId
 - 
 
+Summary
+- DbContext
+- OnConfiguring
+- State
+- Updating some fields
+- SaveChanges
+- Events
+- Arbitrary Queries
+- Transactions
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

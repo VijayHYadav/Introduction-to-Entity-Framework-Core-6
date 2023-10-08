@@ -52,6 +52,30 @@ namespace EFCoreMovies
             // }
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) {
+            ProcessSaveChanges();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ProcessSaveChanges() {
+            // ! ChangeTracker which allows to take a look into other entities that are being tracked.
+            foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added
+                && e.Entity is  AuditableEntity)) {
+                    var entity = item.Entity as  AuditableEntity;
+                    entity.CreateBy = "Vizz";
+                    entity.ModifiedBy = "Vizz";
+            }
+
+            // ! ChangeTracker which allows to take a look into other entities that are being tracked.
+            foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified
+                && e.Entity is  AuditableEntity)) {
+                    var entity = item.Entity as  AuditableEntity;
+                    entity.ModifiedBy = "Vizz";
+                    // * we are making sure that we never, never, never modify that CreateBy column.
+                    item.Property(nameof(entity.CreateBy)).IsModified = false;
+            }
+        }
+
         private static void SomeConfiguraton(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);

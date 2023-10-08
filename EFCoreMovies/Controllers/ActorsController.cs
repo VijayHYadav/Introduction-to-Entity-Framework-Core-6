@@ -72,10 +72,10 @@ namespace EFCoreMovies.Controllers
 
             // !  we are going to update all of the properties, all of the columns of the table. It doesn't matter if there wasn't any changes on 
             // ! that column, it is still going to be part of the update query.
-            // context.Update(actor);
+            context.Update(actor);
 
             // ! only for disconnected model
-            context.Entry(actor).Property(p => p.Name).IsModified = true;
+            // context.Entry(actor).Property(p => p.Name).IsModified = true;
 
             await context.SaveChangesAsync();
             return Ok();

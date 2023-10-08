@@ -10,34 +10,8 @@ namespace EFCoreMovies
 {
     public class ApplicationDbContext : DbContext
     {
-        private readonly IUserService userService;
-
-        // public ApplicationDbContext() {}
-
-        public ApplicationDbContext(DbContextOptions options, IUserService userService,
-            IChangeTrackerEventHandler changeTrackerEventHandler) : base(options)
-        {
-            this.userService = userService;
-            // !  these events will only get fire if we do not use as no tracking.
-            if (changeTrackerEventHandler is not null)
-            {
-                ChangeTracker.Tracked += changeTrackerEventHandler.TrackedHandler;
-                ChangeTracker.StateChanged += changeTrackerEventHandler.StateChangeHandler;
-                SavingChanges += changeTrackerEventHandler.SavingChangesHandler;
-                SavedChanges += changeTrackerEventHandler.SavedChangesHandler;
-                SaveChangesFailed += changeTrackerEventHandler.SavedChangesFailHandler;
-            }
-        }
-
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     if (!optionsBuilder.IsConfigured)
-        //     {
-        //         optionsBuilder.UseSqlServer("name=DefaultConnection", options => {
-        //             options.UseNetTopologySuite();
-        //         });
-        //     }
-        // }
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {}
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
@@ -67,47 +41,12 @@ namespace EFCoreMovies
             // }
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) {
-            ProcessSaveChanges();
-            return base.SaveChangesAsync(cancellationToken);
-        }
-
-        private void ProcessSaveChanges() {
-            // ! ChangeTracker which allows to take a look into other entities that are being tracked.
-            foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Added
-                && e.Entity is  AuditableEntity)) {
-                    var entity = item.Entity as  AuditableEntity;
-                    entity.CreateBy = userService.GetUserId();
-                    entity.ModifiedBy = userService.GetUserId();
-            }
-
-            // ! ChangeTracker which allows to take a look into other entities that are being tracked.
-            foreach(var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified
-                && e.Entity is  AuditableEntity)) {
-                    var entity = item.Entity as  AuditableEntity;
-                    entity.ModifiedBy = userService.GetUserId();
-                    // * we are making sure that we never, never, never modify that CreateBy column.
-                    item.Property(nameof(entity.CreateBy)).IsModified = false;
-            }
-        }
-
         private static void SomeConfiguraton(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
 
-            // modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
-
-            modelBuilder.Entity<MovieWithCounts>().ToSqlQuery(@"
-            sElEcT Id, Title,
-            (select count(*) from GenreMovie where MoviesId = movies.Id) as AmountGenres,
-            (select count(distinct moviesID) from CinemaHallMovie
-                inner join CinemaHalls
-                on CinemaHalls.Id = CinemaHallMovie.cinemaHallsId
-                where MoviesId = movies.Id) as AmountCinemas,
-            (select count(*) from MoviesActors where MovieId = movies.Id) as AmountActors
-            from Movies
-            ");
-
+            modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
+           
             modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
             modelBuilder.Entity<RentableMovie>().ToTable("RentableMovies");
 

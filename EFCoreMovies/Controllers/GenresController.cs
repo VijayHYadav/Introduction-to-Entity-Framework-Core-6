@@ -36,7 +36,11 @@ namespace EFCoreMovies.Controllers
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genre>> Get(int id){
-            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
+            // var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
+
+            // var genre = await context.Generes.FromSqlRaw("SeleCt * From Generes Where Id = {0}", id).IgnoreQueryFilters().FirstOrDefaultAsync();
+
+            var genre = await context.Generes.FromSqlInterpolated($"SeleCt * From Generes Where Id = {id}").IgnoreQueryFilters().FirstOrDefaultAsync();
 
             if (genre is null) {
                 return NotFound();

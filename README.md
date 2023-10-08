@@ -247,6 +247,14 @@ Summary
 - Arbitrary Queries
 - Transactions
 
+
+Section 9: Advanced Scenarios
+- Functions
+- Computed columns
+- Concurrency
+- Temporal tables
+- Commands
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

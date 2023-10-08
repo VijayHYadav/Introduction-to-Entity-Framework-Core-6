@@ -148,5 +148,7 @@ namespace EFCoreMovies
         public DbSet<CinemaDetail> CinemaDetails { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

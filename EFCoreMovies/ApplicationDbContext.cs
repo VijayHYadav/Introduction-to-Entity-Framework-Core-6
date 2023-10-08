@@ -23,6 +23,9 @@ namespace EFCoreMovies
             {
                 ChangeTracker.Tracked += changeTrackerEventHandler.TrackedHandler;
                 ChangeTracker.StateChanged += changeTrackerEventHandler.StateChangeHandler;
+                SavingChanges += changeTrackerEventHandler.SavingChangesHandler;
+                SavedChanges += changeTrackerEventHandler.SavedChangesHandler;
+                SaveChangesFailed += changeTrackerEventHandler.SavedChangesFailHandler;
             }
         }
 

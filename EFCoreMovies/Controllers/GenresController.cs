@@ -97,7 +97,12 @@ namespace EFCoreMovies.Controllers
 
             // * Now, this add operation is not really adding the genre in the database. I mean, it is not inserting the record in the genre's table.
             // * Please remember that in a previous video I mentioned that EF-framework work with entities by using statuses.
-            context.Add(genre); // * what we are doing here is that we are marking genre as added.
+            // context.Add(genre); // * what we are doing here is that we are marking genre as added.
+
+            
+            await context.Database.ExecuteSqlInterpolatedAsync($@"
+                                                    INSERT INTO Generes(Name)
+                                                    VALUES({genre.Name})");
 
             // context.Entry(genre).State = EntityState.Added;
 

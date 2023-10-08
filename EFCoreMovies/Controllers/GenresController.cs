@@ -4,6 +4,7 @@ using EFCoreMovies.DTOs;
 using EFCoreMovies.Entities;
 using EFCoreMovies.Utilites;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -20,6 +21,44 @@ namespace EFCoreMovies.Controllers
         {
             this.context = context;
             this.mapper = mapper;
+        }
+
+        [HttpGet("stored_procedure/{id:int}")]
+        public async Task<ActionResult<Genre>> GetSP(int id)
+        {
+            var genres = context.Generes.FromSqlInterpolated($"EXEC Genres_GetById {id}")
+                .IgnoreQueryFilters().AsAsyncEnumerable();
+
+            await foreach (var genre in genres)
+            {
+                return genre;
+            }
+
+            return NotFound();
+
+        }
+
+        [HttpPost("stored_procedure")]
+        public async Task<ActionResult> PostSP(GenreCreationDTO genreCreationDTO)
+        {
+            var genreExists = await context.Generes.AnyAsync(p => p.Name == genreCreationDTO.Name);
+
+            if (genreExists)
+            {
+                return BadRequest($"The genre with name {genreCreationDTO.Name} already exists.");
+            }
+
+            var output = new SqlParameter();
+            output.ParameterName = "@id";
+            output.SqlDbType = System.Data.SqlDbType.Int;
+            output.Direction = System.Data.ParameterDirection.Output;
+
+            await context.Database.ExecuteSqlRawAsync("EXEC Genres_Insert @name = {0}, @id = {1} OUTPUT", 
+                    genreCreationDTO.Name, output);
+
+            var id = (int)output.Value;
+
+            return Ok(id);
         }
 
         [HttpGet]

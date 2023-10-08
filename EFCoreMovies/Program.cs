@@ -12,6 +12,7 @@ builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializ
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserServiceFake>();
+builder.Services.AddScoped<IChangeTrackerEventHandler, ChangeTrackerEventHandler>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

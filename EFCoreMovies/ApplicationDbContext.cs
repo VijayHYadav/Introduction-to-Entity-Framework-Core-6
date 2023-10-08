@@ -5,6 +5,7 @@ using EFCoreMovies.Utilites;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+// ! tracks gets executed when ef-core starts tracking an entity. meanwhile, the state change gets executed when the state of an entity changes.
 namespace EFCoreMovies
 {
     public class ApplicationDbContext : DbContext
@@ -13,9 +14,16 @@ namespace EFCoreMovies
 
         // public ApplicationDbContext() {}
 
-        public ApplicationDbContext(DbContextOptions options, IUserService userService) : base(options)
+        public ApplicationDbContext(DbContextOptions options, IUserService userService,
+            IChangeTrackerEventHandler changeTrackerEventHandler) : base(options)
         {
             this.userService = userService;
+            // !  these events will only get fire if we do not use as no tracking.
+            if (changeTrackerEventHandler is not null)
+            {
+                ChangeTracker.Tracked += changeTrackerEventHandler.TrackedHandler;
+                ChangeTracker.StateChanged += changeTrackerEventHandler.StateChangeHandler;
+            }
         }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

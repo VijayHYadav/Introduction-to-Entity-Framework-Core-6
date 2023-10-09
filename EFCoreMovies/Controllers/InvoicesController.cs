@@ -35,6 +35,14 @@ namespace EFCoreMovies.Controllers
         }
 
 
+        [HttpGet("{invoiceId:int}/detail")]
+        public async Task<ActionResult<IEnumerable<InvoiceDetail>>> GetDetail(int invoiceId)
+        {
+            return await context.InvoiceDetails
+                .Where(p => p.InvoiceId == invoiceId)
+                .OrderByDescending(p => p.Total).ToListAsync();
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post()
         {

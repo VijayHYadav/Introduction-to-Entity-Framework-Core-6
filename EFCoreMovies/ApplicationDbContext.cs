@@ -48,11 +48,19 @@ namespace EFCoreMovies
             return 0;
         }
 
-        private static void SomeConfiguraton(ModelBuilder modelBuilder)
+        public IQueryable<MovieWithCounts> MoviesWithCounts(int movieId) {
+            return FromExpression(() => MoviesWithCounts(movieId));
+        }
+
+        private void SomeConfiguraton(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CinemaWithoutLocation>().ToSqlQuery("Select Id, Name FROM Cinemas").ToView(null);
 
-            modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
+            // modelBuilder.Entity<MovieWithCounts>().ToView("MoviesWithCounts");
+
+            modelBuilder.Entity<MovieWithCounts>().HasNoKey().ToTable(name: null);
+
+            modelBuilder.HasDbFunction(() => MoviesWithCounts(0)).HasName("MovieWithCounts");
            
             modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
             modelBuilder.Entity<RentableMovie>().ToTable("RentableMovies");

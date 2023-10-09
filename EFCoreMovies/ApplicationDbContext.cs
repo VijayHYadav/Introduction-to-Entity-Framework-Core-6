@@ -1,4 +1,5 @@
 ﻿using EFCoreMovies.Entities;
+using EFCoreMovies.Entities.Functions;
 using EFCoreMovies.Entities.Keyless;
 using EFCoreMovies.Entities.Seeding;
 using EFCoreMovies.Utilites;
@@ -25,8 +26,9 @@ namespace EFCoreMovies
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             Module3Seeding.Seed(modelBuilder);
             Module6Seeding.Seed(modelBuilder);
+            SeedingModule9.Seed(modelBuilder);
             SomeConfiguraton(modelBuilder);
-
+            Scalars.RegisterFunctions(modelBuilder);
             // modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
 
@@ -39,6 +41,11 @@ namespace EFCoreMovies
             //         }
             //     }
             // }
+        }
+
+        [DbFunction]
+        public int InvoiceDetailSum(int invoiceId) {
+            return 0;
         }
 
         private static void SomeConfiguraton(ModelBuilder modelBuilder)

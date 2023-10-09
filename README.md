@@ -255,6 +255,16 @@ Section 9: Advanced Scenarios
 - Temporal tables
 - Commands
 
+User-Defined Functions
+- A user-defined is a function in our database which we can use to encapsulate functionality.
+- These functions are only for querying data.
+- They are not meant to be used to modify the database in any way, like inserting, modifying or deleting data.
+- The result of this function can be a scalar or a result set.
+- A function to compute the sum or costs.
+- A function to compute the average of costs.
+
+
+
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)

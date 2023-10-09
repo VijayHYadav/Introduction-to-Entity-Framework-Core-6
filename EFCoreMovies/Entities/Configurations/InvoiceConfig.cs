@@ -8,6 +8,8 @@ namespace EFCoreMovies.Entities.Configurations
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
             builder.HasMany(typeof(InvoiceDetail)).WithOne();
+
+            builder.Property(p => p.InvoiceNumber).HasDefaultValueSql("NEXT VALUE FOR invoice.InvoiceNumber");
         }
     }
 }

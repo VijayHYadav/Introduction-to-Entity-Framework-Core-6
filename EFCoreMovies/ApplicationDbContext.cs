@@ -29,6 +29,9 @@ namespace EFCoreMovies
             SeedingModule9.Seed(modelBuilder);
             SomeConfiguraton(modelBuilder);
             Scalars.RegisterFunctions(modelBuilder);
+            modelBuilder.HasSequence<int>("InvoiceNumber", "invoice");
+            // .StartsAt(10).IncrementsBy(5);
+            
             // modelBuilder.Ignore<Address>();
             // modelBuilder.Entity<Log>().Property(p => p.Id).ValueGeneratedNever();
 

@@ -23,42 +23,27 @@ namespace EFCoreMovies.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("stored_procedure/{id:int}")]
-        public async Task<ActionResult<Genre>> GetSP(int id)
+        [HttpPost("concurrency_token")]
+       public async Task<ActionResult> ConcurrencyToken()
         {
-            var genres = context.Generes.FromSqlInterpolated($"EXEC Genres_GetById {id}")
-                .IgnoreQueryFilters().AsAsyncEnumerable();
 
-            await foreach (var genre in genres)
-            {
-                return genre;
-            }
+            var genreId = 1;
 
-            return NotFound();
+            // Felipe reads a record from the db
+            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == genreId);
+            genre.Name = "Felipe was here";
 
-        }
+            // Claudia updates the record in the DB
+            await context.Database.ExecuteSqlInterpolatedAsync($@"
+                UPDATE Generes SET Name = 'Claudia I want 2' 
+                WHERE Id = {genreId}");
 
-        [HttpPost("stored_procedure")]
-        public async Task<ActionResult> PostSP(GenreCreationDTO genreCreationDTO)
-        {
-            var genreExists = await context.Generes.AnyAsync(p => p.Name == genreCreationDTO.Name);
+            // Felipe update the record
+            await context.SaveChangesAsync();
 
-            if (genreExists)
-            {
-                return BadRequest($"The genre with name {genreCreationDTO.Name} already exists.");
-            }
+            return Ok();
 
-            var output = new SqlParameter();
-            output.ParameterName = "@id";
-            output.SqlDbType = System.Data.SqlDbType.Int;
-            output.Direction = System.Data.ParameterDirection.Output;
 
-            await context.Database.ExecuteSqlRawAsync("EXEC Genres_Insert @name = {0}, @id = {1} OUTPUT", 
-                    genreCreationDTO.Name, output);
-
-            var id = (int)output.Value;
-
-            return Ok(id);
         }
 
         [HttpGet]

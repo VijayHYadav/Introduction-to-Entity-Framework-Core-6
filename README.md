@@ -263,6 +263,15 @@ User-Defined Functions
 - A function to compute the sum or costs.
 - A function to compute the average of costs.
 
+139. Concurrency Handling with ConcurrencyCheck
+Note: Concurrency conflicts occurs when two people try to make an update over the same record and the update of the second person overrides accidentally Change that the first person.
+The entity framework or allows us to handle the situations in two levels at the field level, at the role level.
+In this video, we will talk about handling this conflict in the field level.
+The idea of handling a concurrency conflict over a field is that there are fields that you want to treat with care.
+In this way If two users read a field that is sensitive and they both try to update a field at the same time, then
+the second user that did the update will get an error because this user does not have their latest version of the data.
+
+.
 
 
 ```

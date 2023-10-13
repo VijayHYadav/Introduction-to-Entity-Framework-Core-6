@@ -7,7 +7,7 @@ namespace EFCoreMovies.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
-            builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.Name).IsRequired(); // .IsConcurrencyToken();
 
             builder.HasQueryFilter(g => !g.isDeleted);
 

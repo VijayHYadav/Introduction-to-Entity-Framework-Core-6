@@ -103,7 +103,8 @@ namespace EFCoreMovies.Controllers
             {
                 Id = genre.Id,
                 Name = genre.Name,
-                createdDate = createdDate
+                createdDate = createdDate,
+                Version = genre.Version
             });
         }
 

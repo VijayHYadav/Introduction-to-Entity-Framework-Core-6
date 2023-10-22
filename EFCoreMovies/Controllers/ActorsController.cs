@@ -58,7 +58,7 @@ namespace EFCoreMovies.Controllers
         }
 
         [HttpPut("disconnected/{id:int}")]
-        public async Task<ActionResult> PutDisconnected(ActorCreationDTO actorCreationDTO, int id)
+        public async Task<ActionResult> PutDisconnected(ActorUpdateDTO actorUpdateDTO, int id)
         {
             var existsActor = await context.Actors.AnyAsync(p => p.Id == id);
 
@@ -67,12 +67,15 @@ namespace EFCoreMovies.Controllers
                 return NotFound();
             }
 
-            var actor = mapper.Map<Actor>(actorCreationDTO);
+            var actor = mapper.Map<Actor>(actorUpdateDTO);
             actor.Id = id;
 
             // !  we are going to update all of the properties, all of the columns of the table. It doesn't matter if there wasn't any changes on 
             // ! that column, it is still going to be part of the update query.
             context.Update(actor);
+
+            context.Entry(actor).Property(p => p.Name).OriginalValue = actorUpdateDTO.Name_Original;
+            // context.Entry(actor).Property(p => p.Biography).OriginalValue = actorUpdateDTO.Biography_Original;
 
             // ! only for disconnected model
             // context.Entry(actor).Property(p => p.Name).IsModified = true;

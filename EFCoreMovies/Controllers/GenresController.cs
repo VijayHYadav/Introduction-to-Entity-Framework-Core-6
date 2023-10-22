@@ -16,11 +16,13 @@ namespace EFCoreMovies.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly IMapper mapper;
+        private readonly ILogger<GenresController> logger;
 
-        public GenresController(ApplicationDbContext context, IMapper mapper)
+        public GenresController(ApplicationDbContext context, IMapper mapper, ILogger<GenresController> logger)
         {
             this.context = context;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost("concurrency_token")]
@@ -29,21 +31,46 @@ namespace EFCoreMovies.Controllers
 
             var genreId = 1;
 
+            try
+            {
             // Felipe reads a record from the db
             var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == genreId);
-            genre.Name = "Felipe was here";
+            genre.Name = "Felipe was here 2";
 
             // Claudia updates the record in the DB
             await context.Database.ExecuteSqlInterpolatedAsync($@"
-                UPDATE Generes SET Example = 'whatever I want' 
+                UPDATE Generes SET Example = 'whatever I want 2' 
                 WHERE Id = {genreId}");
 
             // Felipe update the record
             await context.SaveChangesAsync();
+                
+            } catch(DbUpdateConcurrencyException ex) {
+                var entry = ex.Entries.Single();
+                var currentGenre = await context.Generes.AsNoTracking().FirstOrDefaultAsync(p => p.Id == genreId);
 
-            return Ok();
+                foreach (var property in entry.Metadata.GetProperties())
+                {
+                    var triedValue = entry.Property(property.Name).CurrentValue;
+                    var currentDBValue = context.Entry(currentGenre).Property(property.Name).CurrentValue;
+                    var previousValue = entry.Property(property.Name).OriginalValue;
 
+                    if (currentDBValue?.ToString() == triedValue?.ToString())
+                    {
+                        // This is not property that changed
+                        continue;
+                    }
 
+                    logger.LogInformation($"--- Property {property.Name} ---");
+                    logger.LogInformation($"--- Tried value {triedValue} ---");
+                    logger.LogInformation($"--- Value in the database {currentDBValue} ---");
+                    logger.LogInformation($"--- Previous value {previousValue} ---");
+
+                    // do something...
+                }
+            }
+
+            return BadRequest("The record was updated by somebody else...");
         }
 
         [HttpGet]

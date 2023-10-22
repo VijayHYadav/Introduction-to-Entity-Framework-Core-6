@@ -35,7 +35,7 @@ namespace EFCoreMovies.Controllers
 
             // Claudia updates the record in the DB
             await context.Database.ExecuteSqlInterpolatedAsync($@"
-                UPDATE Generes SET Name = 'Claudia I want 2' 
+                UPDATE Generes SET Example = 'whatever I want' 
                 WHERE Id = {genreId}");
 
             // Felipe update the record

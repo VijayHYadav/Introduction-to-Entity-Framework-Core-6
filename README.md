@@ -343,3 +343,8 @@ In-Memory Provider
 - If one of the responsibilities of the software is to add a genre, then it is important
     to verify that this gets done correctly.
 - In-Memory provider.
+
+LocalDb
+- I wasn't able to make the In-Memory provider work with NetTopologySuite.
+- LocalDB is like a mini SQL-Server.
+- We'll create and delete the DB with each execution of the test suite.

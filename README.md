@@ -299,3 +299,40 @@ Basic Concepts
 - A test it's an experiment that's done on something, to know the result of it.
 - Testing a software is using it too see if it works.
 - This is tedious and error-prone.
+
+Automatic Tests
+- An automatic test is a software the tests our software.
+
+Qualities of a Good Test
+- Consistent
+- Independent
+- Does not make changes
+- Quick
+
+Test Suites
+- A test suite is a set of tests
+
+Parts of a Test
+- Preparation
+- Testing
+- Verification
+
+Example of  a Test
+- Preparation: 
+    In order to test a wire of two accounts, we need two accounts, and one of them should have money.
+    herefore, in this step, we are going to create two accounts and maybe something else that we may need could be a database, for example, testing.
+
+- Testing: 
+    Now that we have the two accounts we need to execute, a function that is going to take one account,
+    is going to subtract the money from it and transfer that money to the other account. So for that, we may need to 
+    execute a function that will receive the two accounts as a parameter and
+
+- Verification: 
+    We need to have a way to verify that for on one account we subtract the money and that the money was
+    sent to the other account. And this depends entirely on how our application works.
+    Maybe we want to use a query into a database to see that the money was transferred to the correct account
+
+
+
+
+

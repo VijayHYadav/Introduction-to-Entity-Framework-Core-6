@@ -331,18 +331,31 @@ namespace EFCoreMovies.Controllers
         }
 
         [HttpPost("restore/{id:int}")]
-        public async Task<ActionResult> Restore(int id)
+        public async Task<ActionResult> Restore(int id, DateTime date)
         {
-            // ! This is how we can ignore all of them query filtersIgnoreQueryFilters.
-            var genre = await context.Generes.IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id == id);
+            var genre = await context.Generes.TemporalAsOf(date)
+                .IgnoreQueryFilters().FirstOrDefaultAsync(p => p.Id == id);
 
             if (genre is null)
             {
                 return NotFound();
             }
 
-            genre.isDeleted = false;
-            await context.SaveChangesAsync();
+            try
+            {
+                await context.Database.ExecuteSqlInterpolatedAsync(@$"
+                SET IDENTITY_INSERT Genres ON;
+
+                INSERT INTO GENRES (Id, Name)
+                VALUES({genre.Id}, {genre.Name})
+
+                SET IDENTITY_INSERT Genres OFF;");
+            }
+            finally
+            {
+                await context.Database.ExecuteSqlInterpolatedAsync(@$"SET IDENTITY_INSERT Genres OFF;");
+            }
+
             return Ok();
         }
 

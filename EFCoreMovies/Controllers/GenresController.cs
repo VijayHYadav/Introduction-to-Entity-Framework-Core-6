@@ -172,6 +172,21 @@ namespace EFCoreMovies.Controllers
             return Ok(genres);
         }
 
+        [HttpGet("TemporalBetween/{id:int}")]
+        public async Task<ActionResult> GetTemporalBetween(int id, DateTime from, DateTime to)
+        {
+            var genres = await context.Generes.TemporalBetween(from, to)
+                .Select(p =>
+                new {
+                    Id = p.Id,
+                    Name = p.Name,
+                    PeriodStart = EF.Property<DateTime>(p, "PeriodStart"),
+                    PeriodEnd = EF.Property<DateTime>(p, "PeriodEnd")
+                })
+                .Where(p => p.Id == id).ToListAsync();
+
+            return Ok(genres);
+        }
 
         [HttpPut("modify_several_times")]
         public async Task<ActionResult> ModifySeveralTimes()

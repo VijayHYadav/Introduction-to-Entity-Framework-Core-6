@@ -18,8 +18,8 @@ namespace EFCoreMovies.Entities.Configurations
                 });
             });
 
-            builder.Property("From").HasColumnType("datetime2");
-            builder.Property("To").HasColumnType("datetime2");
+            builder.Property<DateTime>("From").HasColumnType("datetime2");
+            builder.Property<DateTime>("To").HasColumnType("datetime2");
 
             builder.HasMany(typeof(InvoiceDetail)).WithOne();
 

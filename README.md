@@ -336,3 +336,10 @@ Example of  a Test
 Unit Testing
 - A unit test deals with individual units of source code.
 - Unit tests are usually fast.
+
+In-Memory Provider
+- We're going to see how to test code that involves that ApplicationDbContext.
+- Test behaviors(responsibilites), and not a simple function.
+- If one of the responsibilities of the software is to add a genre, then it is important
+    to verify that this gets done correctly.
+- In-Memory provider.

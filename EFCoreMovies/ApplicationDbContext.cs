@@ -24,9 +24,14 @@ namespace EFCoreMovies
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            Module3Seeding.Seed(modelBuilder);
-            Module6Seeding.Seed(modelBuilder);
-            SeedingModule9.Seed(modelBuilder);
+
+            if (!Database.IsInMemory()) 
+            {
+                Module3Seeding.Seed(modelBuilder);
+                Module6Seeding.Seed(modelBuilder);
+                SeedingModule9.Seed(modelBuilder);
+            }
+
             SomeConfiguraton(modelBuilder);
             Scalars.RegisterFunctions(modelBuilder);
             modelBuilder.HasSequence<int>("InvoiceNumber", "invoice");

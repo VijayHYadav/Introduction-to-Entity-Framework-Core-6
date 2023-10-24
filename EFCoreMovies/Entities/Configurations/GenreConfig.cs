@@ -11,8 +11,8 @@ namespace EFCoreMovies.Entities.Configurations
                 options.IsTemporal();
             });
 
-            builder.Property("PeriodStart").HasColumnType("datetime2");
-            builder.Property("PeriodEnd").HasColumnType("datetime2");
+            builder.Property<DateTime>("PeriodStart").HasColumnType("datetime2");
+            builder.Property<DateTime>("PeriodEnd").HasColumnType("datetime2");
 
             builder.Property(p => p.Name).IsRequired(); // .IsConcurrencyToken();
 

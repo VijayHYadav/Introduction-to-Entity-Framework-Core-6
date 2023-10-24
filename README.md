@@ -333,6 +333,6 @@ Example of  a Test
     Maybe we want to use a query into a database to see that the money was transferred to the correct account
 
 
-
-
-
+Unit Testing
+- A unit test deals with individual units of source code.
+- Unit tests are usually fast.

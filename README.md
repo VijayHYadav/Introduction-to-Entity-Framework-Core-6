@@ -294,3 +294,8 @@ Summary
 - concurrency conflicts
 - temporal tables
 - DbContext in another project
+
+Basic Concepts
+- A test it's an experiment that's done on something, to know the result of it.
+- Testing a software is using it too see if it works.
+- This is tedious and error-prone.

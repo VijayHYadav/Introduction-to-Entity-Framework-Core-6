@@ -124,6 +124,9 @@ Agenda
 >>dotnet ef migrations add GenresExample
 >>Add-Migration GenresExample
 
+>>dotnet ef migrations add Initial --project ../Data/Data.csproj
+>>Add-Migration Initial -Project Data
+
 >>dotnet ef database update
 >>Update-Database
 >>Get-Help Update-Database

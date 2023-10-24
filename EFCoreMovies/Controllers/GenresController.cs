@@ -87,25 +87,75 @@ namespace EFCoreMovies.Controllers
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genre>> Get(int id){
-            // var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
-
-            // var genre = await context.Generes.FromSqlRaw("SeleCt * From Generes Where Id = {0}", id).IgnoreQueryFilters().FirstOrDefaultAsync();
-
-            var genre = await context.Generes.FromSqlInterpolated($"SeleCt * From Generes Where Id = {id}").IgnoreQueryFilters().FirstOrDefaultAsync();
+            var genre = await context.Generes.FirstOrDefaultAsync(p => p.Id == id);
 
             if (genre is null) {
                 return NotFound();
             }
 
             var createdDate  = context.Entry(genre).Property<DateTime>("CreatedDate").CurrentValue;
+            var periodStart = context.Entry(genre).Property<DateTime>("PeriodStart").CurrentValue;
+            var periodEnd = context.Entry(genre).Property<DateTime>("PeriodEnd").CurrentValue;
 
             return Ok(new
             {
                 Id = genre.Id,
                 Name = genre.Name,
                 createdDate = createdDate,
-                Version = genre.Version
+                Version = genre.Version,
+                periodStart,
+                periodEnd
             });
+        }
+
+        [HttpGet("temporalAll/{id:int}")]
+        public async Task<ActionResult> GetTemporalAll(int id)
+        {
+            var genres = await context.Generes.TemporalAll()
+                .Select(p =>
+                new {
+                    Id = p.Id,
+                    Name = p.Name,
+                    PeriodStart = EF.Property<DateTime>(p, "PeriodStart"),
+                    PeriodEnd = EF.Property<DateTime>(p, "PeriodEnd")
+                })
+                .Where(p => p.Id == id).ToListAsync();
+
+            return Ok(genres);
+        }
+
+        [HttpPut("modify_several_times")]
+        public async Task<ActionResult> ModifySeveralTimes()
+        {
+            var genreId = 3;
+
+            var genre = await context.Generes.FirstOrDefaultAsync(x => x.Id == genreId);
+
+            genre.Name = "Comedy 2";
+            await context.SaveChangesAsync();
+            await Task.Delay(5000);
+
+            genre.Name = "Comedy 3";
+            await context.SaveChangesAsync();
+            await Task.Delay(5000);
+
+            genre.Name = "Comedy 4";
+            await context.SaveChangesAsync();
+            await Task.Delay(5000);
+
+            genre.Name = "Comedy 5";
+            await context.SaveChangesAsync();
+            await Task.Delay(5000);
+
+            genre.Name = "Comedy 6";
+            await context.SaveChangesAsync();
+            await Task.Delay(5000);
+
+            genre.Name = "Comedy Current";
+            await context.SaveChangesAsync();
+            await Task.Delay(5000);
+
+            return Ok();
         }
 
         [HttpPost("add2")]

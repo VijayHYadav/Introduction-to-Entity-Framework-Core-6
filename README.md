@@ -284,3 +284,13 @@ the second user that did the update will get an error because this user does not
 
 Temporal tables allows us to have a history of all of the changes that occur in a table.
 And by this, we mean that we are going to store in a separate table all of the data changes that occur in a table.
+
+
+Summary
+- User-Defined functions
+- Scalar functions
+- Tabled-valued  functions
+- computed column
+- concurrency conflicts
+- temporal tables
+- DbContext in another project

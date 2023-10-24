@@ -7,6 +7,13 @@ namespace EFCoreMovies.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
+            builder.ToTable(name: "Genres", options => {
+                options.IsTemporal();
+            });
+
+            builder.Property("PeriodStart").HasColumnType("datetime2");
+            builder.Property("PeriodEnd").HasColumnType("datetime2");
+
             builder.Property(p => p.Name).IsRequired(); // .IsConcurrencyToken();
 
             builder.Property(p => p.Version).IsRowVersion();

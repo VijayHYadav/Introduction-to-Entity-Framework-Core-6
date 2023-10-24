@@ -277,3 +277,7 @@ the second user that did the update will get an error because this user does not
 ```
 ![Alt text](resources/image.png)
 ![Alt text](resources/globleNoTracking.png)
+
+
+Temporal tables allows us to have a history of all of the changes that occur in a table.
+And by this, we mean that we are going to store in a separate table all of the data changes that occur in a table.

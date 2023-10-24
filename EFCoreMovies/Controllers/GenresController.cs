@@ -153,7 +153,7 @@ namespace EFCoreMovies.Controllers
 
             
             await context.Database.ExecuteSqlInterpolatedAsync($@"
-                                                    INSERT INTO Generes(Name)
+                                                    INSERT INTO Genres(Name)
                                                     VALUES({genre.Name})");
 
             // context.Entry(genre).State = EntityState.Added;
